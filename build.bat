@@ -1,0 +1,2 @@
+brunch build --production
+pause
