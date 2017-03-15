@@ -11,16 +11,19 @@ export default class Weapon extends React.Component {
 
   render() {
     return (
-        <li>
-          <strong>{this.props.name}</strong>
-          <ul className="list-inline">
-             <NumericControl title="AT" value={this.props.at} />
-             <NumericControl title="PA" value={this.props.pa} />
-             <PlayerProperty title="RW">
+        <span>
+          <dt>{this.props.name}</dt>
+          <dd>
+            <dl className="dl-inline">
+              <NumericControl title="AT" value={this.props.at} />
+              <NumericControl title="PA" value={this.props.pa} />
+              <PlayerProperty title="RW">
               {this.props.rw}
-             </PlayerProperty>
-          </ul>
-        </li>
+              </PlayerProperty>
+            </dl>
+          </dd>
+
+        </span>
     );
   }
 }

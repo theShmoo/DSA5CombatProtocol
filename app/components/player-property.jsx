@@ -8,9 +8,12 @@ export default class Armor extends React.Component {
 
   render() {
     return (
-        <li>
-          <strong>{this.props.title}</strong> {this.props.children}
-        </li>
+        <span>
+          <dt>{this.props.title}</dt>
+          <dd>
+             {this.props.children}
+          </dd>
+        </span>
     );
   }
 }

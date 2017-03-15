@@ -1,22 +1,23 @@
 import React from "react";
-import { Row, Grid, Col } from "react-bootstrap";
-import HeroWidget from "components/hero-widget";
-import EnemyWidget from "components/enemy-widget";
+import HTML5Backend from "react-dnd-html5-backend";
+import PlayerWidget from "components/player-widget";
 import LocationWidget from "components/location-widget";
-import Player from "components/player";
-import LifePoints from "components/life-points";
-import Weapon from "components/weapon";
-import Armor from "components/armor";
+import Location from "components/location";
+import { Row, Grid, Col } from "react-bootstrap";
+import { DragDropContext } from "react-dnd";
 
-export default class CombatProtocol extends React.Component {
+class CombatProtocol extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       locations: [],
+      location_id: 1,
       players: [],
+      player_id: 0,
     };
 
+    this.movePlayer = this.movePlayer.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
 
@@ -26,84 +27,101 @@ export default class CombatProtocol extends React.Component {
 
   addPlayer(player) {
     console.log("add player " + player.name);
-    this.setState({
-      players: this.state.players.concat([player])
+    player.id = this.state.player_id + 1;
+    this.setState((prevState) => {
+      return {
+        players: prevState.players.concat([player]),
+        player_id: prevState.player_id + 1
+      };
     });
   }
 
   addLocation(location) {
-    console.log("add location");
-    this.setState({
-      locations: this.state.locations.concat([location])
+    location.id = this.state.location_id + 1;
+    console.log("add location " + location.id);
+    this.setState((prevState) => {
+      return {
+        locations: prevState.locations.concat([location]),
+        location_id: prevState.location_id + 1
+      };
     });
   }
 
-  removePlayer(playername) {
-    console.log("Remove player " + playername);
-    var clonedPlayers = this.state.players.slice(); //copy array
-    var i = clonedPlayers.indexOf(player); // find index of player
+  removePlayer(player_id) {
+    console.log("Remove player " + player_id);
+    var playersCopy = this.state.players.slice();
+    var i = playersCopy.findIndex(p => p.id == player_id); // find index of player
     if(i >= 0)
     {
+      playersCopy.splice(i, 1);
       this.setState({
-        players: this.state.players.splice(i, 1)
+        players: playersCopy
       });
     }
   }
 
-  removeLocation(locationname) {
-    console.log("Remove Location " + locationname);
-    var clonedLocations = this.state.locations.slice(); //copy array
-    var i = clonedLocations.indexOf(location); // find index of location
+  removeLocation(location_id) {
+    console.log("Remove Location " + location_id);
+    var locationsCopy = this.state.locations.slice();
+    var i = locationsCopy.findIndex(l => l.id == location_id); // find index of player
     if(i >= 0)
     {
+      locationsCopy.splice(i, 1);
       this.setState({
-        locations: this.state.locations.splice(i, 1)
+        locations: locationsCopy
       });
     }
   }
 
-  createWeapon(weapon) {
-    return (<Weapon name={weapon.name} key={weapon.name} at={weapon.at} pa={weapon.pa} rw={weapon.rw} />);
+  movePlayer(player_id, location_id) {
+    var playersCopy = this.state.players.slice();
+    const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    if(i >= 0) {
+      playersCopy[i].location = location_id;
+      this.setState({
+        players: playersCopy
+      });
+    }
   }
 
-  createArmor(armor) {
-    return (<Armor name={armor.name} rs={armor.rs} be={armor.be} />);
-  }
-
-  createPlayer(player) {
-    let weapons = player.weapons.map((w) => {return this.createWeapon(w);});
-    let armor = this.createArmor(player.armor);
+  createLocation(location) {
     return (
-      <Player name={player.name} key={player.name} onRemove={this.props.removePlayer}>
-        <LifePoints max={player.lp.max} />
-        {weapons}
-        {armor}
-      </Player>);
+      <Location
+        key={location.id}
+        id={location.id}
+        removeable showtitle
+        players={this.state.players}
+        onRemove={this.removeLocation}
+        onPlayerRemove={this.removePlayer}
+        onPlayerMove={this.movePlayer}/>
+    );
   }
 
   render() {
-    let players = this.state.players.map((p) => {return this.createPlayer(p);});
+    let locations = this.state.locations.map((l) => {return this.createLocation(l);});
     return (
       <Grid>
         <Row>
-          <Col lg={6} md={6} sm={12}>
-            <HeroWidget
-              players={players}
-              onAdd={this.addPlayer} />
-          </Col>
-          <Col lg={6} md={6} sm={12}>
-            <EnemyWidget
-              players={players}
-              onAdd={this.addPlayer} />
-          </Col>
+          <PlayerWidget
+            hero
+            players={this.state.players}
+            onAdd={this.addPlayer}
+            onRemove={this.removePlayer}
+            onMove={this.movePlayer} />
+          <PlayerWidget
+            players={this.state.players}
+            onAdd={this.addPlayer}
+            onRemove={this.removePlayer}
+            onMove={this.movePlayer} />
         </Row>
-        <Row className="show-grid">
+        <Row>
           <LocationWidget
-            locations={this.state.locations}
-            players={players}
+            locations={locations}
             onAdd={this.addLocation} />
         </Row>
       </Grid>
     );
   }
 }
+
+export default DragDropContext(HTML5Backend)(CombatProtocol);

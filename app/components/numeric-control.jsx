@@ -8,9 +8,12 @@ export default class NumericControl extends React.Component {
 
   render() {
     return (
-        <li>
-          <strong>{this.props.title}</strong> {this.props.value}
-        </li>
+        <span>
+          <dt>{this.props.title}</dt>
+          <dd>
+             {this.props.value}
+          </dd>
+        </span>
     );
   }
 }

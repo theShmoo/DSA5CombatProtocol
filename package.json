@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "react": "~15.3.0",
+    "react-dom": "~15.3.0",
     "react-bootstrap": "^0.30.7",
-    "react-dom": "~15.3.0"
+    "react-dnd": "^2.2.4",
+    "react-dnd-html5-backend": "^2.2.4"
   },
   "devDependencies": {
     "auto-reload-brunch": "^2.0.0",
@@ -31,5 +33,4 @@
     "json-loader": "^0.5.4",
     "uglify-js-brunch": "^2.0.0"
   }
-
 }
