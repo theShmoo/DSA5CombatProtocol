@@ -1,6 +1,5 @@
 import React from "react";
-import AddButton from "components/add-button";
-import Hero from "components/hero";
+import GlyphButton from "components/glyph-button";
 
 export default class HeroWidget extends React.Component {
 
@@ -10,7 +9,24 @@ export default class HeroWidget extends React.Component {
   }
 
   addHero() {
-    var hero = (<Hero name="test" lep={30} at={8} pa={8} />);
+    var hero = {
+      hero: true,
+      name: "test",
+      lp: {max: 30},
+      weapons: [
+        {
+          name: "Waffenlos",
+          at: 12,
+          pa: 8,
+          rw: "kurz"
+        }
+      ],
+      armor: {
+        name: "Kettenhemd",
+        rs: 4,
+        be: 1
+      }
+    };
     this.props.onAdd(hero);
   }
 
@@ -22,10 +38,10 @@ export default class HeroWidget extends React.Component {
       <div>
         <div className="clearboth">
           <span><h3>{title}</h3></span>
-          <AddButton onClick={this.addHero} tooltip={add_tt}/>
+          <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.addHero} />
         </div>
         <div>
-          {this.props.heros}
+          {this.props.players}
         </div>
       </div>
     );

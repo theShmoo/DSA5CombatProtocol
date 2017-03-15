@@ -1,5 +1,5 @@
 import React from "react";
-import AddButton from "components/add-button";
+import GlyphButton from "components/glyph-button";
 
 export default class EnemyWidget extends React.Component {
 
@@ -9,7 +9,25 @@ export default class EnemyWidget extends React.Component {
   }
 
   addEnemy() {
-    console.log("add enemy");
+  var enemy = {
+      hero: false,
+      name: "Ork",
+      lp: {max: 30},
+      weapons: [
+        {
+          name: "Axt",
+          at: 12,
+          pa: 8,
+          rw: "mittel"
+        }
+      ],
+      armor: {
+        name: "Lederrüstung",
+        rs: 3,
+        be: 1
+      }
+    };
+    this.props.onAdd(enemy);
   }
 
   render() {
@@ -18,7 +36,7 @@ export default class EnemyWidget extends React.Component {
     return (
       <div className="clearboth">
         <span><h3>{title}</h3></span>
-        <AddButton onClick={this.addEnemy} tooltip={add_tt}/>
+        <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.addEnemy} />
       </div>
     );
   }

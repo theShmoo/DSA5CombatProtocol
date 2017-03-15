@@ -1,5 +1,6 @@
 import React from "react";
-import {ListGroup, ListGroupItem, Panel} from "react-bootstrap";
+import {ListGroupItem} from "react-bootstrap";
+import Player from "components/player";
 
 export default class Hero extends React.Component {
 
@@ -9,19 +10,9 @@ export default class Hero extends React.Component {
 
   render() {
     return (
-      <Panel header={this.props.name}>
-        <ListGroup fill>
-          <ListGroupItem header="Lep:">
-            {this.props.lep}
-          </ListGroupItem>
-          <ListGroupItem header="At:">
-            {this.props.at}
-          </ListGroupItem>
-          <ListGroupItem header="Pa:">
-            {this.props.pa}
-          </ListGroupItem>
-        </ListGroup>
-      </Panel>
+      <Player name={this.props.name} onRemove={this.props.onRemove}>
+        {this.props.children}
+      </Player>
     );
   }
-}
+};

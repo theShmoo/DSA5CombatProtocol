@@ -3,6 +3,10 @@ import { Row, Grid, Col } from "react-bootstrap";
 import HeroWidget from "components/hero-widget";
 import EnemyWidget from "components/enemy-widget";
 import LocationWidget from "components/location-widget";
+import Player from "components/player";
+import LifePoints from "components/life-points";
+import Weapon from "components/weapon";
+import Armor from "components/armor";
 
 export default class CombatProtocol extends React.Component {
 
@@ -10,61 +14,44 @@ export default class CombatProtocol extends React.Component {
     super(props);
     this.state = {
       locations: [],
-      heros: [],
-      enemies: []
+      players: [],
     };
 
-    this.addHero = this.addHero.bind(this);
-    this.removeHero = this.removeHero.bind(this);
-
-    this.addEnemy = this.addEnemy.bind(this);
-    this.removeEnemy = this.removeEnemy.bind(this);
+    this.addPlayer = this.addPlayer.bind(this);
+    this.removePlayer = this.removePlayer.bind(this);
 
     this.addLocation = this.addLocation.bind(this);
     this.removeLocation = this.removeLocation.bind(this);
   }
 
-  addHero(hero) {
+  addPlayer(player) {
+    console.log("add player " + player.name);
     this.setState({
-      heros: this.state.heros.concat([hero])
-    });
-  }
-
-  addEnemy(enemy) {
-    this.setState({
-      enemies: this.state.enemies.concat([enemy])
+      players: this.state.players.concat([player])
     });
   }
 
   addLocation(location) {
+    console.log("add location");
     this.setState({
       locations: this.state.locations.concat([location])
     });
   }
 
-  removeHero(hero) {
-    var clonedHeros = this.state.heros.slice(); //copy array
-    var i = clonedHeros.indexOf(hero); // find index of hero
+  removePlayer(playername) {
+    console.log("Remove player " + playername);
+    var clonedPlayers = this.state.players.slice(); //copy array
+    var i = clonedPlayers.indexOf(player); // find index of player
     if(i >= 0)
     {
       this.setState({
-        heros: this.state.heros.splice(i, 1)
+        players: this.state.players.splice(i, 1)
       });
     }
   }
 
-  removeEnemy(enemy) {
-    var clonedEnemy = this.state.enemies.slice(); //copy array
-    var i = clonedEnemy.indexOf(enemy); // find index of enemy
-    if(i >= 0)
-    {
-      this.setState({
-        enemies: this.state.enemies.splice(i, 1)
-      });
-    }
-  }
-
-  removeLocation(location) {
+  removeLocation(locationname) {
+    console.log("Remove Location " + locationname);
     var clonedLocations = this.state.locations.slice(); //copy array
     var i = clonedLocations.indexOf(location); // find index of location
     if(i >= 0)
@@ -75,28 +62,46 @@ export default class CombatProtocol extends React.Component {
     }
   }
 
+  createWeapon(weapon) {
+    return (<Weapon name={weapon.name} key={weapon.name} at={weapon.at} pa={weapon.pa} rw={weapon.rw} />);
+  }
+
+  createArmor(armor) {
+    return (<Armor name={armor.name} rs={armor.rs} be={armor.be} />);
+  }
+
+  createPlayer(player) {
+    let weapons = player.weapons.map((w) => {return this.createWeapon(w);});
+    let armor = this.createArmor(player.armor);
+    return (
+      <Player name={player.name} key={player.name} onRemove={this.props.removePlayer}>
+        <LifePoints max={player.lp.max} />
+        {weapons}
+        {armor}
+      </Player>);
+  }
+
   render() {
+    let players = this.state.players.map((p) => {return this.createPlayer(p);});
     return (
       <Grid>
-        <Row className="show-grid">
+        <Row>
           <Col lg={6} md={6} sm={12}>
             <HeroWidget
-              heros={this.state.heros}
-              onAdd={this.addHero}
-              onRemove={this.removeHero} />
+              players={players}
+              onAdd={this.addPlayer} />
           </Col>
           <Col lg={6} md={6} sm={12}>
             <EnemyWidget
-              enemies={this.state.enemies}
-              onAdd={this.addEnemy}
-              onRemove={this.removeEnemy} />
+              players={players}
+              onAdd={this.addPlayer} />
           </Col>
         </Row>
         <Row className="show-grid">
           <LocationWidget
             locations={this.state.locations}
-            onAdd={this.addLocation}
-            onRemove={this.removeLocation} />
+            players={players}
+            onAdd={this.addLocation} />
         </Row>
       </Grid>
     );

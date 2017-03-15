@@ -1,5 +1,5 @@
 import React from "react";
-import AddButton from "components/add-button";
+import GlyphButton from "components/glyph-button";
 
 export default class LocationWidget extends React.Component {
 
@@ -18,7 +18,7 @@ export default class LocationWidget extends React.Component {
     return (
       <div className="clearboth">
         <span><h3>{title}</h3></span>
-        <AddButton onClick={this.addLocation} tooltip={add_tt}/>
+        <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.addLocation} />
       </div>
     );
   }
