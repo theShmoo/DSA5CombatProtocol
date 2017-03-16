@@ -63,12 +63,23 @@ class CombatProtocol extends React.Component {
   removeLocation(location_id) {
     console.log("Remove Location " + location_id);
     var locationsCopy = this.state.locations.slice();
-    var i = locationsCopy.findIndex(l => l.id == location_id); // find index of player
+    var i = locationsCopy.findIndex(l => l.id == location_id); // find index of location
     if(i >= 0)
     {
+      // if the location was found get all players from the location and put them back where they came from
+      var playersCopy = this.state.players.slice();
+      if(playersCopy.length > 0)
+      {
+        for (var p in playersCopy)
+        {
+          if(p.location == location_id)
+            p.location = p.hero ? 0 : 1;
+        }
+      }
       locationsCopy.splice(i, 1);
       this.setState({
-        locations: locationsCopy
+        locations: locationsCopy,
+        players: playersCopy
       });
     }
   }

@@ -95,15 +95,17 @@ class Location extends Component {
     const remove_tt = "Entferne diesen Ort";
     const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation} /> : "";
 
+    let filtered_players = "";
+    if(players.length > 0)
+      filtered_players = players.filter(p => p.location == id).map((p) => {return this.createPlayer(p);});
+
     return connectDropTarget(
        <div className="location">
         <Row className="player-title">
           {title}
           {glyph}
         </Row>
-        {players.length > 0 &&
-          players.filter(p => p.location == id).map((p) => {return this.createPlayer(p);})
-        }
+        {filtered_players}
         {isOver && !canDrop && this.renderOverlay("red")}
         {!isOver && canDrop && this.renderOverlay("yellow")}
         {isOver && canDrop && this.renderOverlay("green")}
