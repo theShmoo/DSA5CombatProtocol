@@ -47,20 +47,38 @@ footer {
 }
 
 .glyph-button {
-  float: right;
+  margin-left: 1.0em;
 }
 
-.glyph-button .glyphicon {
+.glyph-button,
+.glyphicon {
   color: firebrick;
   cursor: pointer;
 }
+
+.numeric-control-glyph-add,
+.numeric-control-glyph-reduce,
+{
+  cursor: pointer;
+}
+
+.numeric-control-glyph-add
+{
+  color: green;
+}
+
+.numeric-control-glyph-reduce
+{
+  color: firebrick;
+}
+
 
 dt, dd {
   float: left
 }
 dt {
   margin-right: 0.2em;
-  clear:both
+  clear: both;
 }
 
 dl.dl-inline dt {
@@ -86,4 +104,9 @@ dl.dl-inline {
 .player-title {
   font-size: 18px;
   padding-left: 1em;
+}
+
+.suggestion-highlighted {
+  cursor: pointer;
+  background: aliceblue;
 }

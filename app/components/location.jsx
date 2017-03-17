@@ -3,7 +3,7 @@ import GlyphButton from "components/glyph-button";
 import Player from "components/player";
 import Weapon from "components/weapon";
 import Armor from "components/armor";
-import LifePoints from "components/life-points";
+import NumericControl from "components/numeric-control";
 import { ItemTypes } from "components/constants";
 import { Col, Row } from "react-bootstrap";
 import { DropTarget } from "react-dnd";
@@ -49,12 +49,12 @@ class Location extends Component {
   }
 
   createArmor(armor) {
-    return (<Armor name={armor.name} rs={armor.rs} be={armor.be} />);
+    return (<Armor name={armor.name} key={armor.name} rs={armor.rs} be={armor.be} />);
   }
 
   createPlayer(player) {
     let weapons = player.weapons.map((w) => {return this.createWeapon(w);});
-    let armor = this.createArmor(player.armor);
+    let armors = player.armors.map((a) => {return this.createArmor(a);});
     return (
       <Player
         name={player.name}
@@ -63,9 +63,11 @@ class Location extends Component {
         hero={player.hero}
         onRemove={this.props.onPlayerRemove}
         onPlayerMove={this.props.onPlayerMove}>
-        <LifePoints max={player.lp.max} />
+        <NumericControl title="Lep" value ={player.lp.max} />
+        <NumericControl title="Ini" value ={player.ini.basis} />
+        {player.asp.mage && <NumericControl title="Asp" value ={player.asp.max} />}
         {weapons}
-        {armor}
+        {armors}
       </Player>);
   }
 
@@ -84,16 +86,21 @@ class Location extends Component {
     );
   }
 
+  renderTitle(id, removeable) {
+    const title = "Ort " + id;
+
+    const remove_tt = "Entferne diesen Ort";
+    const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation}>{title}</GlyphButton> : {title};
+
+    return glyph;
+  }
+
   render() {
-    const { id, players, removeable, showtitle } = this.props;
+    const { id, players, showtitle, removeable } = this.props;
 
     // These props are injected by React DnD,
     // as defined by your `collect` function above:
     const { isOver, canDrop, connectDropTarget } = this.props;
-
-    const title = showtitle ? (<span>Ort {id-1}</span>): "";
-    const remove_tt = "Entferne diesen Ort";
-    const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation} /> : "";
 
     let filtered_players = "";
     if(players.length > 0)
@@ -101,10 +108,7 @@ class Location extends Component {
 
     return connectDropTarget(
        <div className="location">
-        <Row className="player-title">
-          {title}
-          {glyph}
-        </Row>
+        {showtitle && this.renderTitle(id, removeable)}
         {filtered_players}
         {isOver && !canDrop && this.renderOverlay("red")}
         {!isOver && canDrop && this.renderOverlay("yellow")}

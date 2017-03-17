@@ -71,10 +71,9 @@ class Player extends Component {
         cursor: "move"
       }}>
         <Col lg={6} md={6} sm={12} className="player">
-          <Row className="player-title">
-            <span>{name}</span>
-            <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} />
-          </Row>
+          <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
+              {name}
+          </GlyphButton>
           <dl>
             {children}
           </dl>

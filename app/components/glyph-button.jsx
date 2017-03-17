@@ -1,32 +1,56 @@
 import React from "react";
-import { Tooltip, OverlayTrigger, Button, Glyphicon  } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Glyphicon, Row  } from "react-bootstrap";
 
 export default class GlyphButton extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {hover: false};
+    this.mouseOver = this.mouseOver.bind(this);
+    this.mouseOut = this.mouseOut.bind(this);
+  }
+
+  mouseOver () {
+    this.setState({hover: true});
+  }
+
+  mouseOut () {
+    this.setState({hover: false});
   }
 
   render() {
-    const tooltip = (
-      <Tooltip id="glyph">{this.props.tooltip}</Tooltip>
+
+    const {tooltip, glyph, ignore, onClick, children} = this.props;
+    const tt = (
+      <Tooltip id="glyph">{tooltip}</Tooltip>
     );
 
+    if(ignore) {
+      return (
+        <span>
+          {children}
+        </span>);
+    }
+
     return(
-      <div className="glyph-button">
+      <Row
+        onMouseOver={this.mouseOver}
+        onMouseOut={this.mouseOut}>
+        {children}
         <OverlayTrigger
-          overlay={tooltip}
+          overlay={tt}
           placement="top"
           delayShow={0}
           delayHide={100}>
-            <Button bsSize="xsmall" onClick={this.props.onClick}>
-              <Glyphicon glyph={this.props.glyph}/>
-            </Button>
+            <Glyphicon glyph={glyph} className="glyph-button" style={{display: this.state.hover ? "inline" : "none"}} onClick={onClick}/>
         </OverlayTrigger>
-      </div>
+
+        </Row>
     );
   }
-};
+}
+
 GlyphButton.defaultProps = {
-  glyph: "plus"
+  glyph: "plus",
+  ignore: false
 };

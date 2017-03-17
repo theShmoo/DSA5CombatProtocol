@@ -49,8 +49,8 @@ class CombatProtocol extends React.Component {
 
   removePlayer(player_id) {
     console.log("Remove player " + player_id);
-    var playersCopy = this.state.players.slice();
-    var i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    let playersCopy = this.state.players.slice();
+    let i = playersCopy.findIndex(p => p.id == player_id); // find index of player
     if(i >= 0)
     {
       playersCopy.splice(i, 1);
@@ -62,18 +62,21 @@ class CombatProtocol extends React.Component {
 
   removeLocation(location_id) {
     console.log("Remove Location " + location_id);
-    var locationsCopy = this.state.locations.slice();
-    var i = locationsCopy.findIndex(l => l.id == location_id); // find index of location
+    let locationsCopy = this.state.locations.slice();
+    let i = locationsCopy.findIndex(l => l.id == location_id); // find index of location
     if(i >= 0)
     {
       // if the location was found get all players from the location and put them back where they came from
-      var playersCopy = this.state.players.slice();
+      let playersCopy = this.state.players.slice();
       if(playersCopy.length > 0)
       {
-        for (var p in playersCopy)
+        for (let p of playersCopy)
         {
           if(p.location == location_id)
+          {
             p.location = p.hero ? 0 : 1;
+            console.log("move player " + p.id + " to " + p.location);
+          }
         }
       }
       locationsCopy.splice(i, 1);
@@ -85,7 +88,7 @@ class CombatProtocol extends React.Component {
   }
 
   movePlayer(player_id, location_id) {
-    var playersCopy = this.state.players.slice();
+    let playersCopy = this.state.players.slice();
     const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
     if(i >= 0) {
       playersCopy[i].location = location_id;
