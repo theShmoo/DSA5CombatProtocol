@@ -32,10 +32,12 @@ export default class WeaponForm extends React.Component {
     super(props);
 
     this.state = {
-      name: "Waffenlos",
+      name: "",
       at: 10,
       pa: 6,
-      rw: "kurz",
+      rw: "",
+      grundschaden: "1W6",
+      bonus: "+4",
       showForm: false,
       suggestions: []
     };
@@ -44,6 +46,9 @@ export default class WeaponForm extends React.Component {
     this.paChange = this.paChange.bind(this);
     this.rwChange = this.rwChange.bind(this);
     this.nameChange = this.nameChange.bind(this);
+    this.grundschadenChange = this.grundschadenChange.bind(this);
+    this.bonusChange = this.bonusChange.bind(this);
+
     this.addWeapon = this.addWeapon.bind(this);
 
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
@@ -62,7 +67,9 @@ export default class WeaponForm extends React.Component {
         name: this.state.name,
         at: this.state.at,
         pa: this.state.pa,
-        rw: this.state.rw
+        rw: this.state.rw,
+        grundschaden: this.state.grundschaden,
+        bonus: this.state.bonus
       };
       this.props.onAdd(weapon);
       this.setState({showForm: false});
@@ -75,7 +82,9 @@ export default class WeaponForm extends React.Component {
     if(weapon && weapon.length==1) {
       this.setState({
         name: newValue,
-        rw: weapon[0].rw
+        rw: weapon[0].rw,
+        grundschaden: weapon[0].grundschaden,
+        bonus: weapon[0].bonus
       });
     }
     else {
@@ -109,8 +118,16 @@ export default class WeaponForm extends React.Component {
     this.setState({rw: e.target.value});
   }
 
+  grundschadenChange (e) {
+    this.setState({grundschaden: e.target.value});
+  }
+
+  bonusChange (e) {
+    this.setState({bonus: e.target.value});
+  }
+
   render() {
-    const {at, pa, rw, showForm, name, suggestions} = this.state;
+    const {at, pa, rw, grundschaden, bonus, showForm, name, suggestions} = this.state;
 
     // Autosuggest will pass through all these props to the input element.
     const inputProps = {
@@ -148,6 +165,17 @@ export default class WeaponForm extends React.Component {
           </FormGroup>
           <NumericInput controlId="at" title="Attacke" value={at} onChange={this.atChange}/>
           <NumericInput controlId="pa" title="Parade" value={pa} onChange={this.paChange}/>
+          <FormGroup controlId="weaponTP">
+            <Col componentClass={ControlLabel} sm={3}>
+              Trefferpunkte
+            </Col>
+            <Col sm={5}>
+              <FormControl type="text" value={grundschaden} onChange={this.grundschadenChange}/>
+            </Col>
+            <Col sm={4}>
+              <FormControl type="text" value={bonus} onChange={this.bonusChange}/>
+            </Col>
+          </FormGroup>
           <FormGroup controlId="weaponRW">
             <Col componentClass={ControlLabel} sm={3}>
               Reichweite
@@ -160,7 +188,7 @@ export default class WeaponForm extends React.Component {
         <Col
           smOffset={showForm ? 3 : 0}
           sm={9}>
-          <Button type="submit" onClick={this.addWeapon}>
+          <Button onClick={this.addWeapon}>
             Waffe hinzufügen
           </Button>
         </Col>

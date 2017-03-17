@@ -146,7 +146,7 @@ export default class ArmorForm extends React.Component {
         <Col
           smOffset={showForm ? 3 : 0}
           sm={9}>
-          <Button type="submit" onClick={this.addArmor}>
+          <Button onClick={this.addArmor}>
             Rüstung hinzufügen
           </Button>
         </Col>

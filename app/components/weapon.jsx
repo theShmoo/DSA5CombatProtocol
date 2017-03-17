@@ -11,11 +11,12 @@ export default class Weapon extends React.Component {
   }
 
   removeWeapon() {
-    this.props.onRemove(this.props.name);
+    this.props.onRemove(this.props.weapon);
   }
 
   render() {
-    const {name, at, pa, rw, onRemove} = this.props;
+    const {weapon, onRemove} = this.props;
+    const {name, at, pa, rw, grundschaden, bonus} = weapon;
     const remove_tt = "Entferne die Waffe "+ name;
 
     return (
@@ -27,6 +28,9 @@ export default class Weapon extends React.Component {
               <NumericControl title="PA" value={pa} />
               <PlayerProperty title="RW">
                 {rw}
+              </PlayerProperty>
+              <PlayerProperty title="TP">
+                {grundschaden + bonus}
               </PlayerProperty>
             </dl>
           </dd>

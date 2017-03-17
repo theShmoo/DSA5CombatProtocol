@@ -74,10 +74,10 @@ export default class PlayerModal extends React.Component {
       };});
   }
 
-  removeArmor (armor_name) {
-    console.log("Remove armor " + armor_name);
+  removeArmor (armor) {
+    console.log("Remove armor " + armor.name);
     let player = this.state.player;
-    let i = player.armors.findIndex(w => w.name == armor_name); // find index of armor
+    let i = player.armors.findIndex(w => w.name == armor.name); // find index of armor
     if(i >= 0)
     {
       player.armors.splice(i, 1);
@@ -97,10 +97,10 @@ export default class PlayerModal extends React.Component {
       };});
   }
 
-  removeWeapon (weapon_name) {
-    console.log("Remove weapon " + weapon_name);
+  removeWeapon (weapon) {
+    console.log("Remove weapon " + weapon.name);
     let player = this.state.player;
-    let i = player.weapons.findIndex(w => w.name == weapon_name); // find index of weapon
+    let i = player.weapons.findIndex(w => w.name == weapon.name); // find index of weapon
     if(i >= 0)
     {
       player.weapons.splice(i, 1);
@@ -111,11 +111,11 @@ export default class PlayerModal extends React.Component {
   }
 
   createWeapon(weapon) {
-    return (<Weapon name={weapon.name} key={weapon.name} at={weapon.at} pa={weapon.pa} rw={weapon.rw} onRemove={this.removeWeapon}/>);
+    return (<Weapon weapon={weapon} key={weapon.name} onRemove={this.removeWeapon}/>);
   }
 
   createArmor(armor) {
-    return (<Armor name={armor.name} key={armor.name} rs={armor.rs} be={armor.be} onRemove={this.removeArmor}/>);
+    return (<Armor armor={armor} key={armor.name} onRemove={this.removeArmor}/>);
   }
 
   render() {

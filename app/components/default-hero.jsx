@@ -10,9 +10,11 @@ const hero = {
   },
   weapons: [
     {
-      name: "Axt",
+      name: "Streitaxt",
       at: 12,
       pa: 8,
+      grundschaden: "1W6",
+      bonus: "+4",
       rw: "mittel"
     }
   ],
@@ -37,9 +39,11 @@ const enemy = {
   },
   weapons: [
     {
-      name: "Axt",
+      name: "Streitaxt",
       at: 12,
       pa: 8,
+      grundschaden: "1W6",
+      bonus: "+4",
       rw: "mittel"
     }
   ],

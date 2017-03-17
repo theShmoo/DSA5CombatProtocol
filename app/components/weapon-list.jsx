@@ -1,223 +1,223 @@
 export const rangedWeaponList = [
-   {
-      name: "Balestrina",
-      talent: "Armbrüste",
-      ladezeit: "2 Akt.",
-      tp: "1W6+4",
-      rw: "5/25/40",
-      munition: "Kugeln"
-   }, {
-      name: "Eisenwalder",
-      talent: "Armbrüste",
-      ladezeit: "2/10 Akt.",
-      tp: "1W6+4",
-      rw: "10/50/80",
-      munition: "Bolzen"
-   }, {
-      name: "Handarmbrust",
-      talent: "Armbrüste",
-      ladezeit: "3 Akt.",
-      tp: "1W6+3",
-      rw: "5/25/40",
-      munition: "Bolzen"
-   }, {
-      name: "leichte Armbrust",
-      talent: "Armbrüste",
-      ladezeit: "8 Akt.",
-      tp: "1W6+6",
-      rw: "10/50/80",
-      munition: "Bolzen"
-   }, {
-      name: "schwere Armbrust",
-      talent: "Armbrüste",
-      ladezeit: "15 Akt.",
-      tp: "2W6+6",
-      rw: "20/100/160",
-      munition: "Bolzen"
-   }, {
-      name: "Elfenbogen",
-      talent: "Bögen",
-      ladezeit: "1 Akt",
-      tp: "1W6+5",
-      rw: "50/100/200",
-      munition: "Pfeile"
-   }, {
-      name: "Kompositbogen",
-      talent: "Bögen",
-      ladezeit: "2 Akt",
-      tp: "1W6+7",
-      rw: "20/100/160",
-      munition: "Pfeile"
-   }, {
-      name: "Kurzbogen",
-      talent: "Bögen",
-      ladezeit: "1 Akt",
-      tp: "1W6+4",
-      rw: "10/50/80",
-      munition: "Pfeile"
-   }, {
-      name: "Langbogen",
-      talent: "Bögen",
-      ladezeit: "2 Akt",
-      tp: "1W6+8",
-      rw: "20/100/160",
-      munition: "Pfeile"
-   }, {
-      name: "Schneidzahn",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+4",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Stein",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfbeil",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+3",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfdolch",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+1",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfkeule",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+2",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfring",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+1",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfscheibe",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+1",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfstern",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+1",
-      rw: "2/10/15",
-      munition: ""
-   }, {
-      name: "Wurfspeer",
-      talent: "Wurfwaffen",
-      ladezeit: "2 Akt",
-      tp: "2W6+2",
-      rw: "5/25/40",
-      munition: ""
-   }, {
-      name: "Nostrischer Langbogen",
-      talent: "Bögen",
-      ladezeit: "2 Akt",
-      tp: "1W6+8",
-      rw: "20/120/180",
-      munition: "Pfeile"
-   }, {
-      name: "Feuerspeien",
-      talent: "Feuerspeien",
-      ladezeit: "1 Akt",
-      tp: "1W6",
-      rw: "1/2/3",
-      munition: "speziell"
-   }, {
-      name: "Schleuder",
-      talent: "Schleudern",
-      ladezeit: "2 Akt",
-      tp: "1W6+2",
-      rw: "5/25/60",
-      munition: "Steinchen"
-   }, {
-      name: "Balläster",
-      talent: "Armbrüste",
-      ladezeit: "2 Akt.",
-      tp: "1W6+3",
-      rw: "20/60/100",
-      munition: "Kugeln"
-   }, {
-      name: "Blasrohr",
-      talent: "Blasrohre",
-      ladezeit: "2 Akt.",
-      tp: "1W2",
-      rw: "5/20/40",
-      munition: "Blasrohrpfeile"
-   }, {
-      name: "Diskus",
-      talent: "Diskusse",
-      ladezeit: "2 Akt.",
-      tp: "1W6+2",
-      rw: "5/25/40",
-      munition: ""
-   }, {
-      name: "Wurfnetz",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt.",
-      tp: "spez.",
-      rw: "1/3/5",
-      munition: ""
-   }, {
-      name: "Apfel",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W3",
-      rw: "2/4/8",
-      munition: ""
-   }, {
-      name: "Steinchen",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W3",
-      rw: "2/4/8",
-      munition: ""
-   }, {
-      name: "Bierkrug",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W3+1",
-      rw: "2/4/8",
-      munition: ""
-   }, {
-      name: "Geschirr",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W3+1",
-      rw: "2/4/8",
-      munition: ""
-   }, {
-      name: "Vase",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W3+1",
-      rw: "2/4/8",
-      munition: ""
-   }, {
-      name: "Zauberkugel",
-      talent: "Wurfwaffen",
-      ladezeit: "1 Akt",
-      tp: "1W6+1",
-      rw: "3/6/9",
-      munition: ""
-   }
-]
+  {
+    name: "Balestrina",
+    talent: "Armbrüste",
+    ladezeit: "2 Akt.",
+    tp: "1W6+4",
+    rw: "5/25/40",
+    munition: "Kugeln"
+  }, {
+    name: "Eisenwalder",
+    talent: "Armbrüste",
+    ladezeit: "2/10 Akt.",
+    tp: "1W6+4",
+    rw: "10/50/80",
+    munition: "Bolzen"
+  }, {
+    name: "Handarmbrust",
+    talent: "Armbrüste",
+    ladezeit: "3 Akt.",
+    tp: "1W6+3",
+    rw: "5/25/40",
+    munition: "Bolzen"
+  }, {
+    name: "leichte Armbrust",
+    talent: "Armbrüste",
+    ladezeit: "8 Akt.",
+    tp: "1W6+6",
+    rw: "10/50/80",
+    munition: "Bolzen"
+  }, {
+    name: "schwere Armbrust",
+    talent: "Armbrüste",
+    ladezeit: "15 Akt.",
+    tp: "2W6+6",
+    rw: "20/100/160",
+    munition: "Bolzen"
+  }, {
+    name: "Elfenbogen",
+    talent: "Bögen",
+    ladezeit: "1 Akt",
+    tp: "1W6+5",
+    rw: "50/100/200",
+    munition: "Pfeile"
+  }, {
+    name: "Kompositbogen",
+    talent: "Bögen",
+    ladezeit: "2 Akt",
+    tp: "1W6+7",
+    rw: "20/100/160",
+    munition: "Pfeile"
+  }, {
+    name: "Kurzbogen",
+    talent: "Bögen",
+    ladezeit: "1 Akt",
+    tp: "1W6+4",
+    rw: "10/50/80",
+    munition: "Pfeile"
+  }, {
+    name: "Langbogen",
+    talent: "Bögen",
+    ladezeit: "2 Akt",
+    tp: "1W6+8",
+    rw: "20/100/160",
+    munition: "Pfeile"
+  }, {
+    name: "Schneidzahn",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+4",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Stein",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfbeil",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+3",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfdolch",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+1",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfkeule",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+2",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfring",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+1",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfscheibe",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+1",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfstern",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+1",
+    rw: "2/10/15",
+    munition: ""
+  }, {
+    name: "Wurfspeer",
+    talent: "Wurfwaffen",
+    ladezeit: "2 Akt",
+    tp: "2W6+2",
+    rw: "5/25/40",
+    munition: ""
+  }, {
+    name: "Nostrischer Langbogen",
+    talent: "Bögen",
+    ladezeit: "2 Akt",
+    tp: "1W6+8",
+    rw: "20/120/180",
+    munition: "Pfeile"
+  }, {
+    name: "Feuerspeien",
+    talent: "Feuerspeien",
+    ladezeit: "1 Akt",
+    tp: "1W6",
+    rw: "1/2/3",
+    munition: "speziell"
+  }, {
+    name: "Schleuder",
+    talent: "Schleudern",
+    ladezeit: "2 Akt",
+    tp: "1W6+2",
+    rw: "5/25/60",
+    munition: "Steinchen"
+  }, {
+    name: "Balläster",
+    talent: "Armbrüste",
+    ladezeit: "2 Akt.",
+    tp: "1W6+3",
+    rw: "20/60/100",
+    munition: "Kugeln"
+  }, {
+    name: "Blasrohr",
+    talent: "Blasrohre",
+    ladezeit: "2 Akt.",
+    tp: "1W2",
+    rw: "5/20/40",
+    munition: "Blasrohrpfeile"
+  }, {
+    name: "Diskus",
+    talent: "Diskusse",
+    ladezeit: "2 Akt.",
+    tp: "1W6+2",
+    rw: "5/25/40",
+    munition: ""
+  }, {
+    name: "Wurfnetz",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt.",
+    tp: "spez.",
+    rw: "1/3/5",
+    munition: ""
+  }, {
+    name: "Apfel",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W3",
+    rw: "2/4/8",
+    munition: ""
+  }, {
+    name: "Steinchen",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W3",
+    rw: "2/4/8",
+    munition: ""
+  }, {
+    name: "Bierkrug",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W3+1",
+    rw: "2/4/8",
+    munition: ""
+  }, {
+    name: "Geschirr",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W3+1",
+    rw: "2/4/8",
+    munition: ""
+  }, {
+    name: "Vase",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W3+1",
+    rw: "2/4/8",
+    munition: ""
+  }, {
+    name: "Zauberkugel",
+    talent: "Wurfwaffen",
+    ladezeit: "1 Akt",
+    tp: "1W6+1",
+    rw: "3/6/9",
+    munition: ""
+  }
+];
 
 export const weaponList = [
   {

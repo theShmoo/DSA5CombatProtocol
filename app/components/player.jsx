@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from "react";
 import GlyphButton from "components/glyph-button";
+import Weapon from "components/weapon";
+import Armor from "components/armor";
+import NumericControl from "components/numeric-control";
 import { ItemTypes } from "components/constants";
 import { Col, Row } from "react-bootstrap";
 import { DragSource } from "react-dnd";
@@ -60,10 +63,37 @@ class Player extends Component {
     this.props.onPlayerMove(player_id, location_id);
   }
 
+  createWeapon(weapon) {
+    return (<Weapon weapon={weapon} key={weapon.name} />);
+  }
+
+  createArmor(armor) {
+    return (<Armor armor={armor} key={armor.name} />);
+  }
+
+
+  renderProperties() {
+    let weapons = this.props.player.weapons.map((w) => {return this.createWeapon(w);});
+    let armors = this.props.player.armors.map((a) => {return this.createArmor(a);});
+
+    const {lp, ini, asp} = this.props.player;
+
+    return (
+      <dl>
+        <NumericControl title="Lep" value ={lp.max} />
+        <NumericControl title="Ini" value ={ini.basis} />
+        {asp.mage && <NumericControl title="Asp" value ={asp.max} />}
+        {weapons}
+        {armors}
+      </dl>
+    );
+  }
+
   render() {
-    const player_string = this.props.hero ? "Helden" : "Gegner";
-    const remove_tt = "Entferne den " + player_string + " " + this.props.name;
-    const { connectDragSource, isDragging, name, children } = this.props;
+    const {hero, name } = this.props.player;
+    const player_string = hero ? "Helden" : "Gegner";
+    const remove_tt = "Entferne den " + player_string + " " + name;
+    const { connectDragSource, isDragging} = this.props;
 
     return connectDragSource(
       <div style={{
@@ -74,9 +104,7 @@ class Player extends Component {
           <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
               {name}
           </GlyphButton>
-          <dl>
-            {children}
-          </dl>
+          { this.renderProperties() }
         </Col>
       </div>
     );

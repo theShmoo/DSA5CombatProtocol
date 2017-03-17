@@ -11,11 +11,12 @@ export default class Armor extends React.Component {
   }
 
   removeArmor() {
-    this.props.onRemove(this.props.name);
+    this.props.onRemove(this.props.armor);
   }
 
   render() {
-    const {name, rs, be, onRemove} = this.props;
+    const {armor, onRemove} = this.props;
+    const {name, rs, be} = armor;
     const remove_tt = "Entferne die Rüstung "+ name;
 
     return (

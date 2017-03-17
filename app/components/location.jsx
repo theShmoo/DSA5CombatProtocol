@@ -1,9 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import GlyphButton from "components/glyph-button";
 import Player from "components/player";
-import Weapon from "components/weapon";
-import Armor from "components/armor";
-import NumericControl from "components/numeric-control";
 import { ItemTypes } from "components/constants";
 import { Col, Row } from "react-bootstrap";
 import { DropTarget } from "react-dnd";
@@ -44,31 +41,15 @@ class Location extends Component {
     this.props.onRemove(this.props.id);
   }
 
-  createWeapon(weapon) {
-    return (<Weapon name={weapon.name} key={weapon.name} at={weapon.at} pa={weapon.pa} rw={weapon.rw} />);
-  }
-
-  createArmor(armor) {
-    return (<Armor name={armor.name} key={armor.name} rs={armor.rs} be={armor.be} />);
-  }
-
   createPlayer(player) {
-    let weapons = player.weapons.map((w) => {return this.createWeapon(w);});
-    let armors = player.armors.map((a) => {return this.createArmor(a);});
+
     return (
       <Player
-        name={player.name}
+        player={player}
         key={player.id}
         id={player.id}
-        hero={player.hero}
         onRemove={this.props.onPlayerRemove}
-        onPlayerMove={this.props.onPlayerMove}>
-        <NumericControl title="Lep" value ={player.lp.max} />
-        <NumericControl title="Ini" value ={player.ini.basis} />
-        {player.asp.mage && <NumericControl title="Asp" value ={player.asp.max} />}
-        {weapons}
-        {armors}
-      </Player>);
+        onPlayerMove={this.props.onPlayerMove} />);
   }
 
   renderOverlay(color) {
