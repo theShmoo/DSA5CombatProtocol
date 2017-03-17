@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-h3 {
+h2, h3, h4 {
   display: inline;
 }
 
@@ -72,7 +72,6 @@ footer {
   color: firebrick;
 }
 
-
 dt, dd {
   float: left
 }
@@ -82,28 +81,35 @@ dt {
 }
 
 dl.dl-inline dt {
-  clear: inherit;
+  clear: both;
 }
 
-dl.dl-inline dt,
-dl.dl-inline dd {
-  display: inline;
-  margin-left: 0.2em;
-  margin-right: 0.2em;
+.panel > .list-group .list-group-item,
+.panel > .panel-collapse > .list-group .list-group-item {
+  display: inline-block;
+  border-width: 0px 0px;
 }
 
 dl.dl-inline {
   margin-bottom: 0em;
 }
 
-.player {
-  border: 1px solid lightgray;
-  padding: 1px;
+.hero,
+.enemy {
+  margin: 10px 0px 10px 0px;
+  padding: 5px 5px 5px 5px;
 }
 
-.player-title {
-  font-size: 18px;
-  padding-left: 1em;
+.hero {
+  box-shadow: 0px 0px 10px green;
+}
+
+.enemy {
+ box-shadow: 0px 0px 10px red;
+}
+
+.location {
+  margin-top: 1em;
 }
 
 .suggestion-highlighted {

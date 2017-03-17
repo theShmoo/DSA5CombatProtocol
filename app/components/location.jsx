@@ -68,7 +68,7 @@ class Location extends Component {
   }
 
   renderTitle(id, removeable) {
-    const title = "Ort " + id;
+    const title = (<h3>Ort {id}</h3>);
 
     const remove_tt = "Entferne diesen Ort";
     const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation}>{title}</GlyphButton> : {title};

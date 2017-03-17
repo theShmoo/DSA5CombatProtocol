@@ -30,7 +30,7 @@ export default class PlayerWidget extends React.Component {
     return (
       <Col lg={6} md={6} sm={12}>
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
-          <h3>{title}</h3>
+          <h2>{title}</h2>
         </GlyphButton>
         <Row>
           <Location

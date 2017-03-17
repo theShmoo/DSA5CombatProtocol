@@ -4,7 +4,7 @@ import Weapon from "components/weapon";
 import Armor from "components/armor";
 import NumericControl from "components/numeric-control";
 import { ItemTypes } from "components/constants";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, ListGroup, Panel } from "react-bootstrap";
 import { DragSource } from "react-dnd";
 
 const playerSource = {
@@ -79,13 +79,17 @@ class Player extends Component {
     const {lp, ini, asp} = this.props.player;
 
     return (
-      <dl>
-        <NumericControl title="Lep" value ={lp.max} />
-        <NumericControl title="Ini" value ={ini.basis} />
-        {asp.mage && <NumericControl title="Asp" value ={asp.max} />}
-        {weapons}
-        {armors}
-      </dl>
+        <Col sm={12}>
+          <Panel>
+            <ListGroup fill>
+              <NumericControl title="Lep" value ={lp.max} />
+              <NumericControl title="Ini" value ={ini.basis} />
+              {asp.mage && <NumericControl title="Asp" value ={asp.max} />}
+            </ListGroup>
+          </Panel>
+          {weapons}
+          {armors}
+        </Col>
     );
   }
 
@@ -100,11 +104,15 @@ class Player extends Component {
         opacity: isDragging ? 0.5 : 1,
         cursor: "move"
       }}>
-        <Col lg={6} md={6} sm={12} className="player">
-          <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
-              {name}
-          </GlyphButton>
-          { this.renderProperties() }
+        <Col lg={6} md={6} sm={12}>
+          <div className={hero ? "hero" : "enemy"}>
+            <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
+              <h4>{name}</h4>
+            </GlyphButton>
+            <Row>
+            { this.renderProperties() }
+            </Row>
+          </div>
         </Col>
       </div>
     );

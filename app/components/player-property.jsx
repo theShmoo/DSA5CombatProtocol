@@ -1,4 +1,5 @@
 import React from "react";
+import { ListGroupItem } from "react-bootstrap";
 
 export default class Armor extends React.Component {
 
@@ -8,12 +9,9 @@ export default class Armor extends React.Component {
 
   render() {
     return (
-        <span>
-          <dt>{this.props.title}</dt>
-          <dd>
-             {this.props.children}
-          </dd>
-        </span>
+      <ListGroupItem header={this.props.title}>
+        {this.props.children}
+      </ListGroupItem>
     );
   }
 }

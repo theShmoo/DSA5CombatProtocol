@@ -155,22 +155,14 @@ export default class PlayerModal extends React.Component {
             <NumericInput show={mage} controlId="playerLep" title="Astralpunkte" value={max} onChange={this.aspChange}/>
             <WeaponForm onAdd={this.addWeapon} />
             <FormGroup controlId="removeWeapon">
-              <Col sm={3}>
-              </Col>
-              <Col sm={9}>
-                <dl>
-                  {weapons}
-                </dl>
+              <Col sm={12}>
+                {weapons}
               </Col>
             </FormGroup>
             <ArmorForm onAdd={this.addArmor} />
             <FormGroup controlId="removeArmor">
-              <Col sm={3}>
-              </Col>
-              <Col sm={9}>
-                <dl>
-                  {armors}
-                </dl>
+              <Col sm={12}>
+                {armors}
               </Col>
             </FormGroup>
           </Form>

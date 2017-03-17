@@ -1,5 +1,5 @@
 import React from "react";
-import { Tooltip, OverlayTrigger, Glyphicon  } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Glyphicon, ListGroupItem } from "react-bootstrap";
 
 export default class NumericControl extends React.Component {
 
@@ -52,36 +52,34 @@ export default class NumericControl extends React.Component {
     const add_tt = (<Tooltip id="reduce"> Erhöhe {title} um 1</Tooltip>);
 
     return (
-        <span>
-          <dt>{title}</dt>
-          <dd
-            onMouseOver={this.mouseOver}
-            onMouseOut={this.mouseOut} >
-            {this.renderValue()}
-            <span style={{display: this.state.hover ? "inline" : "none"}}>
-              <OverlayTrigger
-                overlay={add_tt}
-                placement="top"
-                delayShow={0}
-                delayHide={100}>
-                <Glyphicon
-                  glyph="plus"
-                  className="numeric-control-glyph-add"
-                  onClick={this.add}/>
-              </OverlayTrigger>
-              <OverlayTrigger
-                overlay={reduce_tt}
-                placement="top"
-                delayShow={0}
-                delayHide={100}>
-                <Glyphicon
-                  glyph="minus"
-                  className="numeric-control-glyph-reduce"
-                  onClick={this.reduce}/>
-              </OverlayTrigger>
-            </span>
-          </dd>
-        </span>
+        <ListGroupItem
+          header={title}
+          onMouseOver={this.mouseOver}
+          onMouseOut={this.mouseOut} >
+          {this.renderValue()}
+          <span style={{display: this.state.hover ? "inline" : "none"}}>
+            <OverlayTrigger
+              overlay={add_tt}
+              placement="top"
+              delayShow={0}
+              delayHide={100}>
+              <Glyphicon
+                glyph="plus"
+                className="numeric-control-glyph-add"
+                onClick={this.add}/>
+            </OverlayTrigger>
+            <OverlayTrigger
+              overlay={reduce_tt}
+              placement="top"
+              delayShow={0}
+              delayHide={100}>
+              <Glyphicon
+                glyph="minus"
+                className="numeric-control-glyph-reduce"
+                onClick={this.reduce}/>
+            </OverlayTrigger>
+          </span>
+        </ListGroupItem>
     );
   }
 }
