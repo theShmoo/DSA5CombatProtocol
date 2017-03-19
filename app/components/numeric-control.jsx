@@ -6,20 +6,13 @@ export default class NumericControl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hover: false,
-      value: this.props.value
+      hover: false
     };
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
 
     this.add = this.add.bind(this);
     this.reduce = this.reduce.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.value
-    });
   }
 
 
@@ -32,18 +25,43 @@ export default class NumericControl extends React.Component {
   }
 
   add () {
-    this.setState((prevState) => {return { value: prevState.value + 1};});
+    const {value, id, name} = this.props;
+    const {start, current} = value;
+    let v;
+    if(current)
+      v = {start: start, current: current + 1};
+    else
+      v = {start: start, current: start + 1};
+    if(this.props.id && this.props.name)
+      this.props.onChange(id, name, v);
+    else if(this.props.name)
+      this.props.onChange(name, v);
+    else
+      this.props.onChange(v);
   }
 
   reduce () {
-    this.setState((prevState) => {return { value: prevState.value - 1};});
+    const {value, id, name} = this.props;
+    const {start, current} = value;
+    let v;
+    if(current)
+      v = {start: start, current: current - 1};
+    else
+      v = {start: start, current: start - 1};
+    if(this.props.id && this.props.name)
+      this.props.onChange(id, name, v);
+    else if(this.props.name)
+      this.props.onChange(name, v);
+    else
+      this.props.onChange(v);
   }
 
   renderValue() {
-    if(this.state.value != this.props.value) {
-      return this.state.value + "/" + this.props.value;
+    const {start, current} = this.props.value;
+    if(current) {
+      return current + "/" + start;
     }
-    else return this.props.value;
+    else return start;
   }
 
   render() {
@@ -55,9 +73,10 @@ export default class NumericControl extends React.Component {
         <ListGroupItem
           header={title}
           onMouseOver={this.mouseOver}
-          onMouseOut={this.mouseOut} >
+          onMouseOut={this.mouseOut}
+          className="numeric-control">
           {this.renderValue()}
-          <span style={{display: this.state.hover ? "inline" : "none"}}>
+          <span style={{visibility: this.state.hover ? "visible" : "hidden"}}>
             <OverlayTrigger
               overlay={add_tt}
               placement="top"

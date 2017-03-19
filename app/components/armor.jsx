@@ -15,20 +15,31 @@ export default class Armor extends React.Component {
     this.props.onRemove(this.props.armor);
   }
 
-  render() {
+  renderHeader() {
     const {armor, onRemove} = this.props;
-    const {name, rs, be} = armor;
+    const {name} = armor;
     const remove_tt = "Entferne die Rüstung "+ name;
+    const isIgnored = !onRemove;
 
     return (
-      <GlyphButton ignore={!onRemove} glyph="minus" tooltip={remove_tt} onClick={this.removeArmor}>
-        <Panel collapsible expanded={onRemove} header={name}>
-          <ListGroup fill>
-            <NumericControl title="RS" value={rs} />
-            <NumericControl title="BE" value={be} />
-          </ListGroup>
-        </Panel>
+      <GlyphButton ignore={isIgnored} glyph="minus" tooltip={remove_tt} onClick={this.removeArmor}>
+        <h5>{name}</h5>
       </GlyphButton>
+    );
+  }
+
+  render() {
+    const {armor, onRemove} = this.props;
+    const {rs, be} = armor;
+    const isIgnored =  !onRemove;
+
+    return (
+      <Panel collapsible defaultExpanded={!isIgnored} header={this.renderHeader()}>
+        <ListGroup fill>
+          <NumericControl title="RS" value={rs} />
+          <NumericControl title="BE" value={be} />
+        </ListGroup>
+      </Panel>
     );
   }
 }

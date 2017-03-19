@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Tooltip, OverlayTrigger, Button, Form, Col, Row, ControlLabel, FormControl, FormGroup, Checkbox } from "react-bootstrap";
 import {newHero, newEnemy} from "components/default-hero";
 import NumericInput from "components/numeric-input";
+import StringInput from "components/string-input";
 import Weapon from "components/weapon";
 import Armor from "components/armor";
 import WeaponForm from "components/weapon-form";
@@ -15,12 +16,16 @@ export default class PlayerModal extends React.Component {
     this.state = {
       player : player
     };
-    this.addPlayer = this.addPlayer.bind(this);
-    this.isZauberer = this.isZauberer.bind(this);
+    this.addPlayer = () => { this.props.onAdd(this.state.player); this.props.onClose(); };
     this.nameChange = this.nameChange.bind(this);
     this.lepChange = this.lepChange.bind(this);
     this.iniChange = this.iniChange.bind(this);
+
+    this.isMage = this.isMage.bind(this);
     this.aspChange = this.aspChange.bind(this);
+
+    this.isPriest = this.isPriest.bind(this);
+    this.kapChange = this.kapChange.bind(this);
 
     this.removeWeapon = this.removeWeapon.bind(this);
     this.addWeapon = this.addWeapon.bind(this);
@@ -29,38 +34,45 @@ export default class PlayerModal extends React.Component {
     this.addArmor = this.addArmor.bind(this);
   }
 
-  addPlayer() {
-    this.props.onAdd(this.state.player);
-    this.props.onClose();
-  }
-
-  isZauberer () {
+  nameChange (value) {
     let player = this.state.player;
-    player.asp.mage = !player.asp.mage;
-    this.setState({ player: player });
-  }
-
-  nameChange (e) {
-    let player = this.state.player;
-    player.name = e.target.value;
+    player.name = value;
     this.setState({player: player});
   }
 
   lepChange (value) {
     let player = this.state.player;
-    player.lp.max = value;
+    player.lep.start = value;
     this.setState({player: player});
   }
 
   iniChange (value) {
     let player = this.state.player;
-    player.ini.basis = value;
+    player.ini.start = value;
     this.setState({player: player});
+  }
+
+  isMage () {
+    let player = this.state.player;
+    player.mage = !player.mage;
+    this.setState({ player: player });
   }
 
   aspChange (value) {
     let player = this.state.player;
-    player.asp.max = value;
+    player.asp.start = value;
+    this.setState({player: player});
+  }
+
+  isPriest () {
+    let player = this.state.player;
+    player.priest = !player.priest;
+    this.setState({ player: player });
+  }
+
+  kapChange (value) {
+    let player = this.state.player;
+    player.kap.start = value;
     this.setState({player: player});
   }
 
@@ -110,22 +122,21 @@ export default class PlayerModal extends React.Component {
     }
   }
 
-  createWeapon(weapon) {
-    return (<Weapon weapon={weapon} key={weapon.name} onRemove={this.removeWeapon}/>);
+  createWeapon(weapon, id) {
+    return (<Weapon weapon={weapon} key={id} onRemove={this.removeWeapon}/>);
   }
 
-  createArmor(armor) {
-    return (<Armor armor={armor} key={armor.name} onRemove={this.removeArmor}/>);
+  createArmor(armor, id) {
+    return (<Armor armor={armor} key={id} onRemove={this.removeArmor}/>);
   }
 
   render() {
     const {hero} = this.props;
     const player_title_gen = hero ? "Helden" : "Gegners";
 
-    const {name} = this.state.player;
-    const {mage, max} = this.state.player.asp;
-    let weapons = this.state.player.weapons.map((w) => {return this.createWeapon(w);});
-    let armors = this.state.player.armors.map((a) => {return this.createArmor(a);});
+    const {name, asp, kap, priest, mage} = this.state.player;
+    let weapons = this.state.player.weapons.map((w,i) => {return this.createWeapon(w,i);});
+    let armors = this.state.player.armors.map((a,i) => {return this.createArmor(a,i);});
 
     return (
       <div>
@@ -134,25 +145,27 @@ export default class PlayerModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Form horizontal>
-            <FormGroup controlId="playerName">
-              <Col componentClass={ControlLabel} sm={3}>
-                Name
-              </Col>
-              <Col sm={9}>
-                <FormControl type="text" value={name} onChange={this.nameChange}/>
-              </Col>
-            </FormGroup>
-            <NumericInput controlId="playerLep" title="Lebenspunkte" value={this.state.player.lp.max} onChange={this.lepChange}/>
-            <NumericInput controlId="playerIni" title="Initiative" value={this.state.player.ini.basis} onChange={this.iniChange}/>
+            <StringInput controlId="playerName" title="Name" value={name} onChange={this.nameChange}/>
+            <NumericInput controlId="playerLep" title="Lebenspunkte" value={this.state.player.lep.start} onChange={this.lepChange}/>
+            <NumericInput controlId="playerIni" title="Initiative" value={this.state.player.ini.start} onChange={this.iniChange}/>
             <FormGroup controlId="isMageCheckbox">
               <Col componentClass={ControlLabel} sm={3}>
                 Zauberer
               </Col>
               <Col sm={9}>
-                <Checkbox checked={mage} onChange={this.isZauberer} >Füge Astralpunkte hinzu</Checkbox>
+                <Checkbox checked={mage} onChange={this.isMage} >Füge Astralpunkte hinzu</Checkbox>
               </Col>
             </FormGroup>
-            <NumericInput show={mage} controlId="playerLep" title="Astralpunkte" value={max} onChange={this.aspChange}/>
+            <NumericInput show={mage} controlId="playerAsp" title="Astralpunkte" value={asp.start} onChange={this.aspChange}/>
+            <FormGroup controlId="isPriestCheckbox">
+              <Col componentClass={ControlLabel} sm={3}>
+                Geweihter
+              </Col>
+              <Col sm={9}>
+                <Checkbox checked={priest} onChange={this.isPriest} >Füge Karmapunkte hinzu</Checkbox>
+              </Col>
+            </FormGroup>
+            <NumericInput show={priest} controlId="playerKap" title="Karmapunkte" value={kap.start} onChange={this.kapChange}/>
             <WeaponForm onAdd={this.addWeapon} />
             <FormGroup controlId="removeWeapon">
               <Col sm={12}>

@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-h2, h3, h4 {
+h2, h3, h4, h5 {
   display: inline;
 }
 
@@ -56,19 +56,20 @@ footer {
   cursor: pointer;
 }
 
+.numeric-control {
+  padding-right: 0px;
+}
+
 .numeric-control-glyph-add,
-.numeric-control-glyph-reduce,
-{
+.numeric-control-glyph-reduce {
   cursor: pointer;
 }
 
-.numeric-control-glyph-add
-{
+.numeric-control-glyph-add {
   color: green;
 }
 
-.numeric-control-glyph-reduce
-{
+.numeric-control-glyph-reduce {
   color: firebrick;
 }
 
@@ -90,25 +91,58 @@ dl.dl-inline dt {
   border-width: 0px 0px;
 }
 
+.panel-default > .panel-heading a {
+  color: black;
+}
+
 dl.dl-inline {
   margin-bottom: 0em;
 }
 
 .hero,
 .enemy {
-  margin: 10px 0px 10px 0px;
-  padding: 5px 5px 5px 5px;
 }
 
 .hero {
-  box-shadow: 0px 0px 10px green;
+  box-shadow: 0px 0px 10px $hero-color-dark;
 }
 
 .enemy {
- box-shadow: 0px 0px 10px red;
+  box-shadow: 0px 0px 10px $enemy-color-dark;
+}
+
+.enemy > .panel,
+.hero > .panel {
+  border: 0px;
+}
+
+.hero > .panel > .panel-heading,
+.enemy > .panel > .panel-heading {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.hero > .panel > .panel-heading {
+  background: $hero-color-light;
+}
+
+.enemy > .panel > .panel-heading {
+  background: $enemy-color-light;
+}
+
+h4.ini-hero {
+  color: $hero-color;
+}
+
+h4.ini-enemy {
+  color: $enemy-color;
 }
 
 .location {
+  margin-top: 1em;
+}
+
+.location .player-area {
   margin-top: 1em;
 }
 

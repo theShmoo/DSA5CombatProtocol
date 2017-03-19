@@ -3,6 +3,7 @@ import GlyphButton from "components/glyph-button";
 import Weapon from "components/weapon";
 import Armor from "components/armor";
 import NumericControl from "components/numeric-control";
+import MiniStates from "components/ministates";
 import { ItemTypes } from "components/constants";
 import { Col, Row, ListGroup, Panel } from "react-bootstrap";
 import { DragSource } from "react-dnd";
@@ -51,40 +52,36 @@ class Player extends Component {
 
   constructor(props) {
     super(props);
-    this.removePlayer = this.removePlayer.bind(this);
-    this.movePlayer = this.movePlayer.bind(this);
+
+    this.removePlayer = () => {this.props.onRemove(this.props.id);};
+    this.movePlayer = (player_id, location_id) => { this.props.onMove(player_id, location_id);};
+
+    this.onPropertyChange = ( name, value) => {this.props.onEdit(this.props.id, name, value);};
   }
 
-  removePlayer() {
-    this.props.onRemove(this.props.id);
+  createWeapon(weapon, id) {
+    return (<Weapon weapon={weapon} key={id} />);
   }
 
-  movePlayer(player_id, location_id) {
-    this.props.onPlayerMove(player_id, location_id);
-  }
-
-  createWeapon(weapon) {
-    return (<Weapon weapon={weapon} key={weapon.name} />);
-  }
-
-  createArmor(armor) {
-    return (<Armor armor={armor} key={armor.name} />);
+  createArmor(armor, id) {
+    return (<Armor armor={armor} key={id} />);
   }
 
 
   renderProperties() {
-    let weapons = this.props.player.weapons.map((w) => {return this.createWeapon(w);});
-    let armors = this.props.player.armors.map((a) => {return this.createArmor(a);});
+    let weapons = this.props.player.weapons.map((w, i) => {return this.createWeapon(w, i);});
+    let armors = this.props.player.armors.map((a, i) => {return this.createArmor(a, i);});
 
-    const {lp, ini, asp} = this.props.player;
+    const {lep, ini, asp, kap, mage, priest, states} = this.props.player;
 
     return (
         <Col sm={12}>
           <Panel>
             <ListGroup fill>
-              <NumericControl title="Lep" value ={lp.max} />
-              <NumericControl title="Ini" value ={ini.basis} />
-              {asp.mage && <NumericControl title="Asp" value ={asp.max} />}
+              <NumericControl title="Lep" name="lep" value={lep} onChange={this.onPropertyChange} />
+              <NumericControl title="Ini" name="ini" states={states} value={ini} onChange={this.onPropertyChange} />
+              {mage && <NumericControl title="Asp" name="asp" value={asp} onChange={this.onPropertyChange} />}
+              {priest && <NumericControl title="Kap" name="kap" value={kap} onChange={this.onPropertyChange} />}
             </ListGroup>
           </Panel>
           {weapons}
@@ -93,10 +90,21 @@ class Player extends Component {
     );
   }
 
-  render() {
-    const {hero, name } = this.props.player;
+  renderTitle() {
+    const {hero, name, states } = this.props.player;
     const player_string = hero ? "Helden" : "Gegner";
     const remove_tt = "Entferne den " + player_string + " " + name;
+
+    return (
+      <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
+        <h4>{name}</h4>
+        <MiniStates states={states} />
+      </GlyphButton>
+    );
+  }
+
+  render() {
+    const { hero } = this.props.player;
     const { connectDragSource, isDragging} = this.props;
 
     return connectDragSource(
@@ -106,12 +114,11 @@ class Player extends Component {
       }}>
         <Col lg={6} md={6} sm={12}>
           <div className={hero ? "hero" : "enemy"}>
-            <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
-              <h4>{name}</h4>
-            </GlyphButton>
-            <Row>
-            { this.renderProperties() }
-            </Row>
+            <Panel collapsible defaultExpanded={true} header={this.renderTitle()}>
+              <Row>
+              { this.renderProperties() }
+              </Row>
+            </Panel>
           </div>
         </Col>
       </div>

@@ -18,7 +18,7 @@ export default class LocationWidget extends React.Component {
     const title = "Orte";
     const add_tt = "Einen Ort hinzufügen";
     let locations = this.props.locations.map((l, id) => {return (
-      <Col lg={6} md={6} sm={12} key={id}>
+      <Col lg={4} md={6} sm={12} key={id}>
         {l}
       </Col>
     );});

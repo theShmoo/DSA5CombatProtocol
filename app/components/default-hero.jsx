@@ -2,17 +2,21 @@ const hero = {
   hero: 1,
   location: 0,
   name: "Hero",
-  ini: {basis: 10},
-  lp: {max: 30},
+  lep: {start: 30},
+  ini: {start: 10},
+  mage: false,
   asp: {
-    mage: false,
-    max: 30
+    start: 30
+  },
+  priest: false,
+  kap: {
+    start: 30
   },
   weapons: [
     {
       name: "Streitaxt",
-      at: 12,
-      pa: 8,
+      at: {start: 12},
+      pa: {start: 8},
       grundschaden: "1W6",
       bonus: "+4",
       rw: "mittel"
@@ -21,27 +25,32 @@ const hero = {
   armors: [
     {
       name: "Keine",
-      rs: 0,
-      be: 0
+      rs: {start: 0},
+      be: {start: 0}
     }
-  ]
+  ],
+  states: []
 };
 
 const enemy = {
   hero: 0,
   location: 1,
   name: "Ork",
-  lp: {max: 30},
-  ini: {basis: 10},
+  lep: {start: 30},
+  ini: {start: 10},
+  mage: false,
   asp: {
-    mage: false,
-    max: 30
+    start: 30
+  },
+  priest: false,
+  kap: {
+    start: 30
   },
   weapons: [
     {
       name: "Streitaxt",
-      at: 12,
-      pa: 8,
+      at: {start: 12},
+      pa: {start: 8},
       grundschaden: "1W6",
       bonus: "+4",
       rw: "mittel"
@@ -50,10 +59,11 @@ const enemy = {
   armors: [
     {
       name: "Keine",
-      rs: 0,
-      be: 0
+      rs: {start: 0},
+      be: {start: 0}
     }
-  ]
+  ],
+  states: []
 };
 
 export function newHero() {

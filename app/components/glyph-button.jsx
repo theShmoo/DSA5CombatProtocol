@@ -1,5 +1,5 @@
 import React from "react";
-import { Tooltip, OverlayTrigger, Glyphicon, Col  } from "react-bootstrap";
+import { Tooltip, OverlayTrigger, Glyphicon  } from "react-bootstrap";
 
 export default class GlyphButton extends React.Component {
 
@@ -33,7 +33,7 @@ export default class GlyphButton extends React.Component {
     }
 
     return(
-      <Col sm={12}
+      <div
         onMouseOver={this.mouseOver}
         onMouseOut={this.mouseOut}>
         {children}
@@ -44,8 +44,7 @@ export default class GlyphButton extends React.Component {
           delayHide={100}>
             <Glyphicon glyph={glyph} className="glyph-button" style={{display: this.state.hover ? "inline" : "none"}} onClick={onClick}/>
         </OverlayTrigger>
-
-        </Col>
+      </div>
     );
   }
 }

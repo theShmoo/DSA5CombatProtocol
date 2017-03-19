@@ -3,8 +3,22 @@ import HTML5Backend from "react-dnd-html5-backend";
 import PlayerWidget from "components/player-widget";
 import LocationWidget from "components/location-widget";
 import Location from "components/location";
+import IniWidget from "components/ini-widget";
 import { Row, Grid, Col } from "react-bootstrap";
 import { DragDropContext } from "react-dnd";
+
+function calculateStates(player) {
+  let states = [];
+  const {lep} = player;
+  const stepsize = lep.start / 4.0;
+  const c = Math.ceil(lep.current/stepsize);
+  let num_pain = 4-c;
+  if(lep.current < 5) num_pain++;
+  for (let p = 0; p < num_pain; p++)
+    states.push({name: "Schmerz"});
+
+  player.states = states;
+}
 
 class CombatProtocol extends React.Component {
 
@@ -19,6 +33,7 @@ class CombatProtocol extends React.Component {
 
     this.movePlayer = this.movePlayer.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
+    this.editPlayer = this.editPlayer.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
 
     this.addLocation = this.addLocation.bind(this);
@@ -34,6 +49,20 @@ class CombatProtocol extends React.Component {
         player_id: prevState.player_id + 1
       };
     });
+  }
+
+  editPlayer(player_id, property, new_values) {
+    console.log("Edit player " + player_id );
+    let playersCopy = this.state.players.slice();
+    let i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    if(i >= 0)
+    {
+      playersCopy[i][property] = new_values;
+      calculateStates(playersCopy[i]);
+      this.setState({
+        players: playersCopy
+      });
+    }
   }
 
   addLocation(location) {
@@ -107,32 +136,36 @@ class CombatProtocol extends React.Component {
         players={this.state.players}
         onRemove={this.removeLocation}
         onPlayerRemove={this.removePlayer}
-        onPlayerMove={this.movePlayer}/>
+        onPlayerEdit={this.editPlayer}
+        onPlayerMove={this.movePlayer}
+        />
     );
   }
 
   render() {
     let locations = this.state.locations.map((l) => {return this.createLocation(l);});
     return (
-      <Grid>
-        <Row>
-          <PlayerWidget
-            hero
-            players={this.state.players}
-            onAdd={this.addPlayer}
-            onRemove={this.removePlayer}
-            onMove={this.movePlayer} />
-          <PlayerWidget
-            players={this.state.players}
-            onAdd={this.addPlayer}
-            onRemove={this.removePlayer}
-            onMove={this.movePlayer} />
-        </Row>
-        <Row>
-          <LocationWidget
-            locations={locations}
-            onAdd={this.addLocation} />
-        </Row>
+      <Grid fluid>
+        <IniWidget players={this.state.players} onEdit={this.editPlayer}/>
+        <PlayerWidget
+          hero
+          players={this.state.players}
+          onAdd={this.addPlayer}
+          onRemove={this.removePlayer}
+          onEdit={this.editPlayer}
+          onMove={this.movePlayer}
+          />
+        <PlayerWidget
+          players={this.state.players}
+          onAdd={this.addPlayer}
+          onRemove={this.removePlayer}
+          onEdit={this.editPlayer}
+          onMove={this.movePlayer}
+          />
+        <LocationWidget
+          locations={locations}
+          onAdd={this.addLocation}
+          />
       </Grid>
     );
   }

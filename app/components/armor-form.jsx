@@ -1,30 +1,8 @@
 import React from "react";
 import NumericInput from "components/numeric-input";
 import {armorList} from "components/weapon-list";
+import SuggestionInput from "components/suggestion-input";
 import { Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
-import Autosuggest from "react-autosuggest";
-
-// Teach Autosuggest how to calculate suggestions for any given input value.
-const getSuggestions = value => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0 ? [] : armorList.filter(armor =>
-    armor.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
-};
-
-// When suggestion is clicked, Autosuggest needs to populate the input element
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name;
-
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => (
-  <div>
-    {suggestion.name}
-  </div>
-);
 
 export default class ArmorForm extends React.Component {
 
@@ -33,18 +11,16 @@ export default class ArmorForm extends React.Component {
 
     this.state = {
       name: "",
-      rs: 3,
-      be: 0,
-      showForm: false,
-      suggestions: []
+      rs: {start: 0},
+      be: {start: 0},
+      showForm: false
     };
 
-    this.rsChange = this.rsChange.bind(this);
-    this.beChange = this.beChange.bind(this);
     this.nameChange = this.nameChange.bind(this);
     this.addArmor = this.addArmor.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
+
+    this.rsChange = (value) => { this.setState({rs: {start: value}}); };
+    this.beChange = (value) => { this.setState({be: {start: value}}); };
   }
 
   addArmor (e) {
@@ -72,8 +48,8 @@ export default class ArmorForm extends React.Component {
     if(armor && armor.length==1) {
       this.setState({
         name: newValue,
-        rs: parseInt(armor[0].rs),
-        be: parseInt(armor[0].be)
+        rs: {start: armor[0].rs},
+        be: {start: armor[0].be}
       });
     }
     else {
@@ -83,35 +59,8 @@ export default class ArmorForm extends React.Component {
     }
   }
 
-  onSuggestionsFetchRequested ( {value} ) {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
-  }
-
-  onSuggestionsClearRequested () {
-    this.setState({
-      suggestions: []
-    });
-  }
-
-  rsChange (value) {
-    this.setState({rs: value});
-  }
-
-  beChange (value) {
-    this.setState({be: value});
-  }
-
   render() {
-    const {rs, be, showForm, name, suggestions} = this.state;
-
-    // Autosuggest will pass through all these props to the input element.
-    const inputProps = {
-      placeholder: "Füge einen Namen hinzu",
-      value: name,
-      onChange: this.nameChange
-    };
+    const {rs, be, showForm, name} = this.state;
 
     return (
       <FormGroup controlId="addArmor">
@@ -119,29 +68,15 @@ export default class ArmorForm extends React.Component {
           Rüstungen
         </Col>
         <Col sm={9} style={showForm ? {} : {display: "none"}}>
-          <FormGroup controlId="armorName">
-            <Col componentClass={ControlLabel} sm={3}>
-              Name
-            </Col>
-            <Col sm={9}>
-              <Autosuggest
-                theme={{
-                  input: "form-control",
-                  suggestionsList: "list-group",
-                  suggestion: "list-group-item",
-                  suggestionHighlighted: "suggestion-highlighted"
-                }}
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-              />
-            </Col>
-          </FormGroup>
-          <NumericInput controlId="rs" title="RS" value={rs} onChange={this.rsChange}/>
-          <NumericInput controlId="be" title="Behinderung" value={be} onChange={this.beChange}/>
+          <SuggestionInput
+            controlId="armorName"
+            title="Name"
+            value={name}
+            placeholder="Füge einen Namen hinzu"
+            data={armorList}
+            onChange={this.nameChange} />
+          <NumericInput controlId="rs" title="RS" value={rs.start} onChange={this.rsChange}/>
+          <NumericInput controlId="be" title="Behinderung" value={be.start} onChange={this.beChange}/>
         </Col>
         <Col
           smOffset={showForm ? 3 : 0}

@@ -17,7 +17,6 @@ const locationTarget = {
 
   drop(props) {
     // move it
-    //movePlayer(props.id);
     return{ id: props.id };
   }
 };
@@ -34,22 +33,20 @@ class Location extends Component {
 
   constructor(props) {
     super(props);
-    this.removeLocation = this.removeLocation.bind(this);
-  }
-
-  removeLocation() {
-    this.props.onRemove(this.props.id);
+    this.removeLocation = () => {this.props.onRemove(this.props.id);};
   }
 
   createPlayer(player) {
-
     return (
       <Player
         player={player}
         key={player.id}
         id={player.id}
         onRemove={this.props.onPlayerRemove}
-        onPlayerMove={this.props.onPlayerMove} />);
+        onMove={this.props.onPlayerMove}
+        onEdit={this.props.onPlayerEdit}
+        />
+    );
   }
 
   renderOverlay(color) {
@@ -90,10 +87,12 @@ class Location extends Component {
     return connectDropTarget(
        <div className="location">
         {showtitle && this.renderTitle(id, removeable)}
-        {filtered_players}
-        {isOver && !canDrop && this.renderOverlay("red")}
-        {!isOver && canDrop && this.renderOverlay("yellow")}
-        {isOver && canDrop && this.renderOverlay("green")}
+        <div className="player-area">
+          {filtered_players}
+          {isOver && !canDrop && this.renderOverlay("red")}
+          {!isOver && canDrop && this.renderOverlay("yellow")}
+          {isOver && canDrop && this.renderOverlay("green")}
+        </div>
       </div>
     );
   }

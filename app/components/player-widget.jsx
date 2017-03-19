@@ -23,7 +23,7 @@ export default class PlayerWidget extends React.Component {
 
   render() {
     const {hero} = this.props;
-    const title = hero ? "Held" : "Gegner";
+    const title = hero ? "Helden" : "Gegner";
     const add_tt = "Einen " + title + " hinzufügen";
     const location_id = hero ? 0 : 1;
 
@@ -37,7 +37,9 @@ export default class PlayerWidget extends React.Component {
             players={this.props.players}
             id={location_id}
             onPlayerRemove={this.props.onRemove}
-            onPlayerMove={this.props.onMove} />
+            onPlayerMove={this.props.onMove}
+            onPlayerEdit={this.props.onEdit}
+            />
         </Row>
         <Modal
           show={this.state.showModal}
