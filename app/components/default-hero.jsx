@@ -12,18 +12,18 @@ const hero = {
   kap: {
     start: 30
   },
-  weapons: [
+  gear: [
     {
+      type: "weapon",
       name: "Streitaxt",
       at: {start: 12},
       pa: {start: 8},
       grundschaden: "1W6",
       bonus: "+4",
       rw: "mittel"
-    }
-  ],
-  armors: [
+    },
     {
+      type: "armor",
       name: "Keine",
       rs: {start: 0},
       be: {start: 0}
@@ -46,18 +46,18 @@ const enemy = {
   kap: {
     start: 30
   },
-  weapons: [
+  gear: [
     {
-      name: "Streitaxt",
-      at: {start: 12},
+      type: "weapon",
+      name: "Knüppel",
+      at: {start: 10},
       pa: {start: 8},
       grundschaden: "1W6",
-      bonus: "+4",
+      bonus: "+2",
       rw: "mittel"
-    }
-  ],
-  armors: [
+    },
     {
+      type: "armor",
       name: "Keine",
       rs: {start: 0},
       be: {start: 0}

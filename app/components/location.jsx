@@ -45,6 +45,7 @@ class Location extends Component {
         onRemove={this.props.onPlayerRemove}
         onMove={this.props.onPlayerMove}
         onEdit={this.props.onPlayerEdit}
+        onGearEdit={this.props.onGearEdit}
         />
     );
   }

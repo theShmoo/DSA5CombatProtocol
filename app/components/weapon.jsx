@@ -9,8 +9,8 @@ export default class Weapon extends React.Component {
   constructor(props) {
     super(props);
     this.removeWeapon = this.removeWeapon.bind(this);
-    this.atChange = (value) => {this.props.onEdit(this.props.id, "at", value);};
-    this.paChange = (value) => {this.props.onEdit(this.props.id, "pa", value);};
+    this.atChange = (value) => {this.props.onEdit(this.props.weapon.name, "at", value);};
+    this.paChange = (value) => {this.props.onEdit(this.props.weapon.name, "pa", value);};
   }
 
   removeWeapon() {
@@ -31,15 +31,15 @@ export default class Weapon extends React.Component {
   }
 
   render() {
-    const {weapon, onRemove} = this.props;
+    const {weapon, states, onRemove} = this.props;
     const {at, pa, rw, grundschaden, bonus} = weapon;
     const isIgnored =  !onRemove;
 
     return (
         <Panel collapsible defaultExpanded={!isIgnored} header={this.renderHeader()}>
           <ListGroup fill>
-            <NumericControl title="AT" value={at} onChange={this.atChange} />
-            <NumericControl title="PA" value={pa} onChange={this.paChange}/>
+            <NumericControl title="AT" states={states} value={at} onChange={this.atChange} />
+            <NumericControl title="PA" states={states} value={pa} onChange={this.paChange}/>
             <PlayerProperty title="RW">
               {rw}
             </PlayerProperty>

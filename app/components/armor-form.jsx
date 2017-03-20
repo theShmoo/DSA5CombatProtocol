@@ -2,7 +2,7 @@ import React from "react";
 import NumericInput from "components/numeric-input";
 import {armorList} from "components/weapon-list";
 import SuggestionInput from "components/suggestion-input";
-import { Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
+import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
 
 export default class ArmorForm extends React.Component {
 
@@ -12,8 +12,7 @@ export default class ArmorForm extends React.Component {
     this.state = {
       name: "",
       rs: {start: 0},
-      be: {start: 0},
-      showForm: false
+      be: {start: 0}
     };
 
     this.nameChange = this.nameChange.bind(this);
@@ -23,22 +22,24 @@ export default class ArmorForm extends React.Component {
     this.beChange = (value) => { this.setState({be: {start: value}}); };
   }
 
+  checkState() {
+    return this.state.name != "";
+  }
+
   addArmor (e) {
     e.preventDefault();
-    if(!this.state.showForm)
-    {
-      this.setState({showForm: true});
-    }
-    else if(this.state.name != "")
+
+    if(this.checkState())
     {
       const armor = {
         name: this.state.name,
         rs: this.state.rs,
         be: this.state.be,
-        rw: this.state.rw
+        rw: this.state.rw,
+        type: "armor"
       };
       this.props.onAdd(armor);
-      this.setState({showForm: false});
+      this.props.onClose();
     }
   }
 
@@ -48,8 +49,8 @@ export default class ArmorForm extends React.Component {
     if(armor && armor.length==1) {
       this.setState({
         name: newValue,
-        rs: {start: armor[0].rs},
-        be: {start: armor[0].be}
+        rs: {start: parseInt(armor[0].rs)},
+        be: {start: parseInt(armor[0].be)}
       });
     }
     else {
@@ -60,14 +61,15 @@ export default class ArmorForm extends React.Component {
   }
 
   render() {
-    const {rs, be, showForm, name} = this.state;
+    const {rs, be, name} = this.state;
 
     return (
-      <FormGroup controlId="addArmor">
-        <Col componentClass={ControlLabel} sm={3}>
-          Rüstungen
-        </Col>
-        <Col sm={9} style={showForm ? {} : {display: "none"}}>
+      <div>
+        <Modal.Header closeButton>
+          <Modal.Title>Bearbeiten einer Rüstung</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form horizontal>
           <SuggestionInput
             controlId="armorName"
             title="Name"
@@ -77,15 +79,12 @@ export default class ArmorForm extends React.Component {
             onChange={this.nameChange} />
           <NumericInput controlId="rs" title="RS" value={rs.start} onChange={this.rsChange}/>
           <NumericInput controlId="be" title="Behinderung" value={be.start} onChange={this.beChange}/>
-        </Col>
-        <Col
-          smOffset={showForm ? 3 : 0}
-          sm={9}>
-          <Button onClick={this.addArmor}>
-            Rüstung hinzufügen
-          </Button>
-        </Col>
-      </FormGroup>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button type="submit" onClick={this.addArmor}>{name} Hinufügen</Button>
+      </Modal.Footer>
+    </div>
     );
   }
 }

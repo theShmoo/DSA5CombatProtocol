@@ -1,7 +1,9 @@
 $hero-color: forestgreen;
 $hero-color-dark: darken( $hero-color, 10% );
-$hero-color-light: lighten( $hero-color, 10% );;
+$hero-color-light: lighten( $hero-color, 10% );
 
 $enemy-color: firebrick;
 $enemy-color-dark: darken( $enemy-color, 10% );
-$enemy-color-light: lighten( $enemy-color, 10% );;
+$enemy-color-light: lighten( $enemy-color, 10% );
+
+$glyph-color: black;

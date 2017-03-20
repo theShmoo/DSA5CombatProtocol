@@ -8,17 +8,9 @@ export default class PlayerWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.openModal = () => {this.setState({showModal: true});};
+    this.closeModal = () => {this.setState({showModal: false});};
     this.state = { showModal: false };
-  }
-
-  openModal() {
-    this.setState({showModal: true});
-  }
-
-  closeModal() {
-    this.setState({showModal: false});
   }
 
   render() {
@@ -39,12 +31,12 @@ export default class PlayerWidget extends React.Component {
             onPlayerRemove={this.props.onRemove}
             onPlayerMove={this.props.onMove}
             onPlayerEdit={this.props.onEdit}
+            onGearEdit={this.props.onGearEdit}
             />
         </Row>
         <Modal
           show={this.state.showModal}
-          onHide={this.closeModal}
-        >
+          onHide={this.closeModal} >
           <PlayerModal hero={hero} onAdd={this.props.onAdd} onClose={this.closeModal}/>
         </Modal>
       </Col>

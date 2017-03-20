@@ -4,9 +4,12 @@ import {newHero, newEnemy} from "components/default-hero";
 import NumericInput from "components/numeric-input";
 import StringInput from "components/string-input";
 import Weapon from "components/weapon";
+import RangeWeapon from "components/range-weapon";
 import Armor from "components/armor";
 import WeaponForm from "components/weapon-form";
+import RangeWeaponForm from "components/range-weapon-form";
 import ArmorForm from "components/armor-form";
+import GlyphButton from "components/glyph-button";
 
 export default class PlayerModal extends React.Component {
 
@@ -14,129 +17,116 @@ export default class PlayerModal extends React.Component {
     super(props);
     const player = props.hero ? newHero() : newEnemy();
     this.state = {
-      player : player
+      player : player,
+      showRangeModal: false,
+      showWeaponModal: false,
+      showArmorModal: false
     };
-    this.addPlayer = () => { this.props.onAdd(this.state.player); this.props.onClose(); };
-    this.nameChange = this.nameChange.bind(this);
-    this.lepChange = this.lepChange.bind(this);
-    this.iniChange = this.iniChange.bind(this);
+    this.addPlayer = () => {
+      this.props.onAdd(this.state.player);
+      this.props.onClose();
+    };
+    this.nameChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.name = value;
+      return { player: player };
+    } ) ;};
+    this.lepChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.lep = value;
+      return { player: player };
+    } ) ;};
+    this.iniChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.ini = value;
+      return { player: player };
+    } ) ;};
 
-    this.isMage = this.isMage.bind(this);
-    this.aspChange = this.aspChange.bind(this);
+    this.isMage = () => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.mage = !player.mage;
+      return { player: player };
+    } ) ;};
 
-    this.isPriest = this.isPriest.bind(this);
-    this.kapChange = this.kapChange.bind(this);
+    this.aspChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.asp = value;
+      return { player: player };
+    } ) ;};
 
-    this.removeWeapon = this.removeWeapon.bind(this);
-    this.addWeapon = this.addWeapon.bind(this);
+    this.isPriest = () => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.priest = !player.priest;
+      return { player: player };
+    } ) ;};
+    this.kapChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.kap = value;
+      return { player: player };
+    } ) ;};
 
-    this.removeArmor = this.removeArmor.bind(this);
-    this.addArmor = this.addArmor.bind(this);
+
+    this.openRangeModal = () => {this.setState({showRangeModal: true});};
+    this.closeRangeModal = () => {this.setState({showRangeModal: false});};
+    this.openArmorModal = () => {this.setState({showArmorModal: true});};
+    this.closeArmorModal = () => {this.setState({showArmorModal: false});};
+    this.openWeaponModal = () => {this.setState({showWeaponModal: true});};
+    this.closeWeaponModal = () => {this.setState({showWeaponModal: false});};
+
+    this.removeGear = this.removeGear.bind(this);
+    this.addGear = this.addGear.bind(this);
   }
 
-  nameChange (value) {
-    let player = this.state.player;
-    player.name = value;
-    this.setState({player: player});
-  }
-
-  lepChange (value) {
-    let player = this.state.player;
-    player.lep.start = value;
-    this.setState({player: player});
-  }
-
-  iniChange (value) {
-    let player = this.state.player;
-    player.ini.start = value;
-    this.setState({player: player});
-  }
-
-  isMage () {
-    let player = this.state.player;
-    player.mage = !player.mage;
-    this.setState({ player: player });
-  }
-
-  aspChange (value) {
-    let player = this.state.player;
-    player.asp.start = value;
-    this.setState({player: player});
-  }
-
-  isPriest () {
-    let player = this.state.player;
-    player.priest = !player.priest;
-    this.setState({ player: player });
-  }
-
-  kapChange (value) {
-    let player = this.state.player;
-    player.kap.start = value;
-    this.setState({player: player});
-  }
-
-  addArmor (armor) {
-    console.log("add armor " + armor.name);
+  addGear (gear) {
+    console.log("add gear " + gear.name);
     this.setState((prevState) => {
-      let armorsCopy = prevState.player.armors.slice();
-      prevState.player.armors = armorsCopy.concat([armor]);
+      let gearCopy = prevState.player.gear.slice();
+      prevState.player.gear = gearCopy.concat([gear]);
       return {
         player: prevState.player
       };});
   }
 
-  removeArmor (armor) {
-    console.log("Remove armor " + armor.name);
-    let player = this.state.player;
-    let i = player.armors.findIndex(w => w.name == armor.name); // find index of armor
-    if(i >= 0)
-    {
-      player.armors.splice(i, 1);
-      this.setState({
-        player: player
-      });
-    }
-  }
-
-  addWeapon (weapon) {
-    console.log("add weapon " + weapon.name);
+  removeGear (gear) {
+    console.log("remove gear " + gear.name);
     this.setState((prevState) => {
-      let weaponsCopy = prevState.player.weapons.slice();
-      prevState.player.weapons = weaponsCopy.concat([weapon]);
-      return {
-        player: prevState.player
-      };});
-  }
-
-  removeWeapon (weapon) {
-    console.log("Remove weapon " + weapon.name);
-    let player = this.state.player;
-    let i = player.weapons.findIndex(w => w.name == weapon.name); // find index of weapon
-    if(i >= 0)
-    {
-      player.weapons.splice(i, 1);
-      this.setState({
-        player: player
-      });
-    }
+      let gearCopy = prevState.player.gear;
+      let i = gearCopy.findIndex(g => g.name == gear.name); // find index of gear
+      if(i >= 0) {
+        gearCopy.splice(i, 1);
+        prevState.player.gear = gearCopy;
+        return {
+          player: prevState.player
+        };
+      }
+    });
   }
 
   createWeapon(weapon, id) {
-    return (<Weapon weapon={weapon} key={id} onRemove={this.removeWeapon}/>);
+    return (<Weapon weapon={weapon} key={id} onRemove={this.removeGear}/>);
+  }
+
+  createRangeWeapon(weapon, id) {
+    return (<RangeWeapon rangeWeapon={weapon} key={id} onRemove={this.removeGear}/>);
   }
 
   createArmor(armor, id) {
-    return (<Armor armor={armor} key={id} onRemove={this.removeArmor}/>);
+    return (<Armor armor={armor} key={id} onRemove={this.removeGear}/>);
   }
 
   render() {
     const {hero} = this.props;
     const player_title_gen = hero ? "Helden" : "Gegners";
 
-    const {name, asp, kap, priest, mage} = this.state.player;
-    let weapons = this.state.player.weapons.map((w,i) => {return this.createWeapon(w,i);});
-    let armors = this.state.player.armors.map((a,i) => {return this.createArmor(a,i);});
+    const {name, asp, kap, priest, mage, gear} = this.state.player;
+    let weapons = "";
+    let armors = "";
+    let rangeWeapons = "";
+    if(gear.length > 0) {
+      weapons = gear.filter(g => g.type == "weapon").map((w,i) => {return this.createWeapon(w,i);});
+      rangeWeapons = gear.filter(g => g.type == "range").map((w,i) => {return this.createRangeWeapon(w,i);});
+      armors = gear.filter(g => g.type == "armor").map((a,i) => {return this.createArmor(a,i);});
+    }
 
     return (
       <div>
@@ -166,14 +156,32 @@ export default class PlayerModal extends React.Component {
               </Col>
             </FormGroup>
             <NumericInput show={priest} controlId="playerKap" title="Karmapunkte" value={kap.start} onChange={this.kapChange}/>
-            <WeaponForm onAdd={this.addWeapon} />
-            <FormGroup controlId="removeWeapon">
+            <FormGroup controlId="armors">
+              <Col sm={12}>
+                <GlyphButton glyph="plus" tooltip="Eine Neue Waffe hinzufügen" onClick={this.openWeaponModal}>
+                  <ControlLabel>Waffen</ControlLabel>
+                </GlyphButton>
+              </Col>
               <Col sm={12}>
                 {weapons}
               </Col>
             </FormGroup>
-            <ArmorForm onAdd={this.addArmor} />
-            <FormGroup controlId="removeArmor">
+            <FormGroup controlId="range-weapons">
+              <Col sm={12}>
+                <GlyphButton glyph="plus" tooltip="Einen Neue Fernkampfwaffe hinzufügen" onClick={this.openRangeModal}>
+                  <ControlLabel>Fernkampfwaffen</ControlLabel>
+                </GlyphButton>
+              </Col>
+              <Col sm={12}>
+                {rangeWeapons}
+              </Col>
+            </FormGroup>
+            <FormGroup controlId="armors">
+              <Col sm={12}>
+                <GlyphButton glyph="plus" tooltip="Eine Neue Rüstung hinzufügen" onClick={this.openArmorModal}>
+                  <ControlLabel>Rüstungen</ControlLabel>
+                </GlyphButton>
+              </Col>
               <Col sm={12}>
                 {armors}
               </Col>
@@ -183,6 +191,21 @@ export default class PlayerModal extends React.Component {
         <Modal.Footer>
           <Button type="submit" onClick={this.addPlayer}>{name} Hinufügen</Button>
         </Modal.Footer>
+        <Modal
+          show={this.state.showRangeModal}
+          onHide={this.closeRangeModal} >
+          <RangeWeaponForm onAdd={this.addGear} onClose={this.closeRangeModal}/>
+        </Modal>
+        <Modal
+          show={this.state.showWeaponModal}
+          onHide={this.closeWeaponModal} >
+          <WeaponForm onAdd={this.addGear} onClose={this.closeWeaponModal}/>
+        </Modal>
+        <Modal
+          show={this.state.showArmorModal}
+          onHide={this.closeArmorModal} >
+          <ArmorForm onAdd={this.addGear} onClose={this.closeArmorModal}/>
+        </Modal>
       </div>
     );
   }

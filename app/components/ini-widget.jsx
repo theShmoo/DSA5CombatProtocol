@@ -2,6 +2,10 @@ import React from "react";
 import NumericControl from "components/numeric-control";
 import { Col, ListGroup, ListGroupItem, Badge, Panel } from "react-bootstrap";
 
+const HEADER = (
+  "Initiative"
+);
+
 export default class IniWidget extends React.Component {
 
   constructor(props) {
@@ -31,19 +35,20 @@ export default class IniWidget extends React.Component {
 
     if(players.length > 0)
     {
+
       let sorted_players = players.sort(
         (a, b) => {
-          const a_val = a.ini.current ? a.ini.current : a.ini.start;
-          const b_val = b.ini.current ? b.ini.current : b.ini.start;
+          const a_val = a.ini.start + (a.ini.current ? a.ini.current : 0);
+          const b_val = b.ini.start + (b.ini.current ? b.ini.current : 0);
           return b_val - a_val;
         }
       ).map((p) => this.createPlayer(p));
 
       return (
         <Col sm={12}>
-          <Panel collapsible defaultExpanded={true} header="Initiative">
+          <Panel collapsible defaultExpanded={true} header={HEADER}>
             <ListGroup fill>
-            {sorted_players}
+              {sorted_players}
             </ListGroup>
           </Panel>
         </Col>

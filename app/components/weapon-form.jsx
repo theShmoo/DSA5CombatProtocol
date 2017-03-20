@@ -3,7 +3,7 @@ import NumericInput from "components/numeric-input";
 import StringInput from "components/string-input";
 import SuggestionInput from "components/suggestion-input";
 import {weaponList} from "components/weapon-list";
-import { Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
+import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
 
 export default class WeaponForm extends React.Component {
 
@@ -16,8 +16,7 @@ export default class WeaponForm extends React.Component {
       pa: {start: 6},
       rw: "",
       grundschaden: "1W6",
-      bonus: "+4",
-      showForm: false
+      bonus: "+4"
     };
 
     this.nameChange = this.nameChange.bind(this);
@@ -25,19 +24,18 @@ export default class WeaponForm extends React.Component {
 
     this.atChange = (value) => { this.setState({at: {start: value}}); };
     this.paChange = (value) => { this.setState({pa: {start: value}}); };
-    this.rwChange = (e) => { this.setState({rw: e.target.value}); };
+    this.rwChange = (value) => { this.setState({rw: value}); };
     this.grundschadenChange = (e) => { this.setState({grundschaden: e.target.value}); };
     this.bonusChange = (e) => { this.setState({bonus: e.target.value}); } ;
+  }
 
+  checkState() {
+    return this.state.name != "";
   }
 
   addWeapon (e) {
     e.preventDefault();
-    if(!this.state.showForm)
-    {
-      this.setState({showForm: true});
-    }
-    else if(this.state.name != "")
+    if(this.checkState())
     {
       const weapon = {
         name: this.state.name,
@@ -45,10 +43,11 @@ export default class WeaponForm extends React.Component {
         pa: this.state.pa,
         rw: this.state.rw,
         grundschaden: this.state.grundschaden,
-        bonus: this.state.bonus
+        bonus: this.state.bonus,
+        type: "weapon"
       };
       this.props.onAdd(weapon);
-      this.setState({showForm: false});
+      this.props.onClose();
     }
   }
 
@@ -71,14 +70,15 @@ export default class WeaponForm extends React.Component {
   }
 
   render() {
-    const {at, pa, rw, grundschaden, bonus, showForm, name} = this.state;
+    const {at, pa, rw, grundschaden, bonus, name} = this.state;
 
     return (
-      <FormGroup controlId="addWeapon">
-        <Col componentClass={ControlLabel} sm={3}>
-          Waffen
-        </Col>
-        <Col sm={9} style={this.state.showForm ? {} : {display: "none"}}>
+      <div>
+        <Modal.Header closeButton>
+          <Modal.Title>Bearbeiten einer Nahkampfwaffe</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form horizontal>
           <SuggestionInput
             controlId="weaponName"
             title="Name"
@@ -88,27 +88,24 @@ export default class WeaponForm extends React.Component {
             onChange={this.nameChange} />
           <NumericInput controlId="at" title="Attacke" value={at.start} onChange={this.atChange}/>
           <NumericInput controlId="pa" title="Parade" value={pa.start} onChange={this.paChange}/>
-          <FormGroup controlId="weaponTP">
+          <FormGroup controlId="damage">
             <Col componentClass={ControlLabel} sm={3}>
-              Trefferpunkte
-            </Col>
-            <Col sm={5}>
-              <FormControl type="text" value={grundschaden} onChange={this.grundschadenChange}/>
+              Schaden
             </Col>
             <Col sm={4}>
-              <FormControl type="text" value={bonus} onChange={this.bonusChange}/>
+                <StringInput controlId="grundschaden" title="TP" value={grundschaden} onChange={this.grundschadenChange}/>
+            </Col>
+            <Col sm={5}>
+                <StringInput controlId="bonus" title="Bonus" value={bonus} onChange={this.bonusChange}/>
             </Col>
           </FormGroup>
           <StringInput controlId="weaponRW" title="Reichweite" value={rw} onChange={this.rwChange}/>
-        </Col>
-        <Col
-          smOffset={showForm ? 3 : 0}
-          sm={9}>
-          <Button onClick={this.addWeapon}>
-            Waffe hinzufügen
-          </Button>
-        </Col>
-      </FormGroup>
+        </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button type="submit" onClick={this.addWeapon}>{name} Hinufügen</Button>
+      </Modal.Footer>
+    </div>
     );
   }
 }

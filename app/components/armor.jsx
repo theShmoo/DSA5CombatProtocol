@@ -9,6 +9,8 @@ export default class Armor extends React.Component {
   constructor(props) {
     super(props);
     this.removeArmor = this.removeArmor.bind(this);
+    this.rsChange = (value) => {this.props.onEdit(this.props.armor.name, "rs", value);};
+    this.beChange = (value) => {this.props.onEdit(this.props.armor.name, "be", value);};
   }
 
   removeArmor() {
@@ -36,8 +38,8 @@ export default class Armor extends React.Component {
     return (
       <Panel collapsible defaultExpanded={!isIgnored} header={this.renderHeader()}>
         <ListGroup fill>
-          <NumericControl title="RS" value={rs} />
-          <NumericControl title="BE" value={be} />
+          <NumericControl title="RS" value={rs} onChange={this.rsChange} />
+          <NumericControl title="BE" value={be} onChange={this.beChange}/>
         </ListGroup>
       </Panel>
     );
