@@ -42,6 +42,15 @@ footer {
   margin: 0.5em;
 }
 
+.player-widget,
+.location-widget {
+  border-top: 1px solid lightgrey;
+}
+
+.ini-widget {
+  margin-top: 1em;
+}
+
 .clearboth {
   clear: both;
 }

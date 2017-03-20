@@ -33,12 +33,12 @@ export default class PlayerModal extends React.Component {
     } ) ;};
     this.lepChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.lep = value;
+      player.lep = {start: value};
       return { player: player };
     } ) ;};
     this.iniChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.ini = value;
+      player.ini = {start: value};
       return { player: player };
     } ) ;};
 
@@ -50,7 +50,7 @@ export default class PlayerModal extends React.Component {
 
     this.aspChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.asp = value;
+      player.asp = {start: value};
       return { player: player };
     } ) ;};
 
@@ -61,10 +61,16 @@ export default class PlayerModal extends React.Component {
     } ) ;};
     this.kapChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.kap = value;
+      player.kap = {start: value};
       return { player: player };
     } ) ;};
 
+    this.onGearChange = ( gear_id, prop, value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      let i = player.gear.findIndex(g => g.name == gear_id); // find index of gear
+      player.gear[i][prop] = value;
+      return { player: player };
+    } ) ;};
 
     this.openRangeModal = () => {this.setState({showRangeModal: true});};
     this.closeRangeModal = () => {this.setState({showRangeModal: false});};
@@ -103,15 +109,15 @@ export default class PlayerModal extends React.Component {
   }
 
   createWeapon(weapon, id) {
-    return (<Weapon weapon={weapon} key={id} onRemove={this.removeGear}/>);
+    return (<Weapon weapon={weapon} key={id} onRemove={this.removeGear} onEdit={this.onGearChange} />);
   }
 
   createRangeWeapon(weapon, id) {
-    return (<RangeWeapon rangeWeapon={weapon} key={id} onRemove={this.removeGear}/>);
+    return (<RangeWeapon rangeWeapon={weapon} key={id} onRemove={this.removeGear} onEdit={this.onGearChange} />);
   }
 
   createArmor(armor, id) {
-    return (<Armor armor={armor} key={id} onRemove={this.removeGear}/>);
+    return (<Armor armor={armor} key={id} onRemove={this.removeGear} onEdit={this.onGearChange} />);
   }
 
   render() {

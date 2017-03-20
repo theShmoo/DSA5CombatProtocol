@@ -45,7 +45,7 @@ export default class IniWidget extends React.Component {
       ).map((p) => this.createPlayer(p));
 
       return (
-        <Col sm={12}>
+        <Col sm={12} className="ini-widget">
           <Panel collapsible defaultExpanded={true} header={HEADER}>
             <ListGroup fill>
               {sorted_players}

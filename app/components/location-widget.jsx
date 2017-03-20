@@ -23,7 +23,7 @@ export default class LocationWidget extends React.Component {
       </Col>
     );});
     return (
-      <Col sm={12}>
+      <Col sm={12} className="location-widget">
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.addLocation}>
           <h2>{title}</h2>
         </GlyphButton>

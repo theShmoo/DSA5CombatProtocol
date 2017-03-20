@@ -20,7 +20,7 @@ export default class PlayerWidget extends React.Component {
     const location_id = hero ? 0 : 1;
 
     return (
-      <Col lg={6} md={6} sm={12}>
+      <Col lg={6} md={6} sm={12} className="player-widget">
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
           <h2>{title}</h2>
         </GlyphButton>
