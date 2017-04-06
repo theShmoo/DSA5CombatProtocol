@@ -19,6 +19,8 @@ export default class PlayerWidget extends React.Component {
     const add_tt = "Einen " + title + " hinzufügen";
     const location_id = hero ? 0 : 1;
 
+    let location = {id: location_id, name: title};
+
     return (
       <Col lg={6} md={6} sm={12} className="player-widget">
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
@@ -28,6 +30,7 @@ export default class PlayerWidget extends React.Component {
           <Location
             players={this.props.players}
             id={location_id}
+            location={location}
             onPlayerRemove={this.props.onRemove}
             onPlayerMove={this.props.onMove}
             onPlayerEdit={this.props.onEdit}

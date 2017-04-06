@@ -1,17 +1,16 @@
 import React from "react";
 import GlyphButton from "components/glyph-button";
-import { Col, Row } from "react-bootstrap";
+import { Modal, Col, Row } from "react-bootstrap";
+import LocationModal from "components/location-modal";
 
 export default class LocationWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.addLocation = this.addLocation.bind(this);
-  }
+    this.state = { showModal: false };
 
-  addLocation() {
-    var location = {};
-    this.props.onAdd(location);
+    this.openModal = () => {this.setState({showModal: true});};
+    this.closeModal = () => {this.setState({showModal: false});};
   }
 
   render() {
@@ -24,12 +23,17 @@ export default class LocationWidget extends React.Component {
     );});
     return (
       <Col sm={12} className="location-widget">
-        <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.addLocation}>
+        <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
           <h2>{title}</h2>
         </GlyphButton>
         <Row>
           {locations}
         </Row>
+        <Modal
+          show={this.state.showModal}
+          onHide={this.closeModal} >
+          <LocationModal onAdd={this.props.onAdd} onClose={this.closeModal}/>
+        </Modal>
       </Col>
     );
   }

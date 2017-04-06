@@ -149,6 +149,7 @@ class CombatProtocol extends React.Component {
       <Location
         key={location.id}
         id={location.id}
+        location={location}
         removeable showtitle
         players={this.state.players}
         onRemove={this.removeLocation}

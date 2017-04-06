@@ -33,7 +33,7 @@ class Location extends Component {
 
   constructor(props) {
     super(props);
-    this.removeLocation = () => {this.props.onRemove(this.props.id);};
+    this.removeLocation = () => {this.props.onRemove(this.props.location.id);};
   }
 
   createPlayer(player) {
@@ -65,8 +65,8 @@ class Location extends Component {
     );
   }
 
-  renderTitle(id, removeable) {
-    const title = (<h3>Ort {id}</h3>);
+  renderTitle(name, removeable) {
+    const title = (<h3>{name}</h3>);
 
     const remove_tt = "Entferne diesen Ort";
     const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation}>{title}</GlyphButton> : {title};
@@ -75,7 +75,8 @@ class Location extends Component {
   }
 
   render() {
-    const { id, players, showtitle, removeable } = this.props;
+    const { location, id, players, showtitle, removeable } = this.props;
+    const {name} = location;
 
     // These props are injected by React DnD,
     // as defined by your `collect` function above:
@@ -87,7 +88,7 @@ class Location extends Component {
 
     return connectDropTarget(
        <div className="location">
-        {showtitle && this.renderTitle(id, removeable)}
+        {showtitle && this.renderTitle(name, removeable)}
         <div className="player-area">
           {filtered_players}
           {isOver && !canDrop && this.renderOverlay("red")}
