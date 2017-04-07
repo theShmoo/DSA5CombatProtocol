@@ -4,6 +4,7 @@ const hero = {
   name: "Hero",
   lep: {start: 30},
   ini: {start: 10},
+  dodge: {start: 10},
   mage: false,
   asp: {
     start: 30
@@ -38,6 +39,7 @@ const enemy = {
   name: "Ork",
   lep: {start: 30},
   ini: {start: 10},
+  dodge: {start: 10},
   mage: false,
   asp: {
     start: 30

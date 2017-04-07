@@ -7,8 +7,7 @@ import IniWidget from "components/ini-widget";
 import { Row, Grid, Col } from "react-bootstrap";
 import { DragDropContext } from "react-dnd";
 
-function calculateStates(player) {
-  let states = [];
+function getPainOfPlayer(player) {
   const {start, current} = player.lep;
   const actual_lep = start + ((current != null) ? current : 0);
   const stepsize = start / 4.0;
@@ -16,8 +15,26 @@ function calculateStates(player) {
   let num_pain = 4-c;
   if(actual_lep <= 5) num_pain++;
   for (let p = 0; p < num_pain; p++)
-    states.push({name: "Schmerz", bonus: -1});
-  player.states = states;
+    player.states.push({name: "Schmerz", bonus: -1});
+}
+
+function getStatesByLocation(player, location) {
+  if(location.cramped) {
+    player.states.push({name: "Eingeengt"});
+  }
+
+  if(location.darkness > 0) {
+    for (let p = 1; p < location.darkness; p++)
+      player.states.push({name: "Dunkelheit", bonus: -1});
+  }
+}
+
+function calculateStates(player, location) {
+  // reset states of player which are then set again
+  player.states = [];
+
+  getPainOfPlayer(player);
+  getStatesByLocation(player, location);
 }
 
 class CombatProtocol extends React.Component {
@@ -59,7 +76,14 @@ class CombatProtocol extends React.Component {
     if(i >= 0)
     {
       playersCopy[i][property] = new_value;
-      calculateStates(playersCopy[i]);
+
+      // get location of player by location_id
+      let location;
+      for(location of this.state.locations) {
+        if(location.id == playersCopy.Copy[i].location_id) return location;
+      }
+
+      calculateStates(playersCopy[i], location);
       this.setState({
         players: playersCopy
       });

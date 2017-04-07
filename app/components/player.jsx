@@ -77,7 +77,7 @@ class Player extends Component {
   renderProperties() {
 
     const {player} = this.props;
-    const {lep, ini, asp, kap, mage, priest, states, gear} = player;
+    const {lep, ini, dodge, asp, kap, mage, priest, states, gear} = player;
 
     let weapons = "";
     let armors = "";
@@ -95,6 +95,7 @@ class Player extends Component {
             <ListGroup fill>
               <NumericControl title="Lep" name="lep" value={lep} onChange={this.onPropertyChange} />
               <NumericControl title="Ini" name="ini" value={ini} onChange={this.onPropertyChange} />
+              <NumericControl title="AW" name="dodge" value={dodge} onChange={this.onPropertyChange} />
               {mage && <NumericControl title="Asp" name="asp" value={asp} onChange={this.onPropertyChange} />}
               {priest && <NumericControl title="Kap" name="kap" value={kap} onChange={this.onPropertyChange} />}
             </ListGroup>

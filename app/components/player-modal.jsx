@@ -41,6 +41,11 @@ export default class PlayerModal extends React.Component {
       player.ini = {start: value};
       return { player: player };
     } ) ;};
+    this.dodgeChange = (value) => { this.setState( (prevState) => {
+      let player = prevState.player;
+      player.dodge = {start: value};
+      return { player: player };
+    } ) ;};
 
     this.isMage = () => { this.setState( (prevState) => {
       let player = prevState.player;
@@ -144,6 +149,7 @@ export default class PlayerModal extends React.Component {
             <StringInput controlId="playerName" title="Name" value={name} onChange={this.nameChange}/>
             <NumericInput controlId="playerLep" title="Lebenspunkte" value={this.state.player.lep.start} onChange={this.lepChange}/>
             <NumericInput controlId="playerIni" title="Initiative" value={this.state.player.ini.start} onChange={this.iniChange}/>
+             <NumericInput controlId="playerDodge" title="Ausweichen" value={this.state.player.dodge.start} onChange={this.dodgeChange}/>
             <FormGroup controlId="isMageCheckbox">
               <Col componentClass={ControlLabel} sm={3}>
                 Zauberer
