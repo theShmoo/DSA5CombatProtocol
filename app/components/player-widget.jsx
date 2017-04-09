@@ -19,7 +19,7 @@ export default class PlayerWidget extends React.Component {
     const add_tt = "Einen " + title + " hinzufügen";
     const location_id = hero ? 0 : 1;
 
-    let location = {id: location_id, name: title};
+    let location = {id: location_id, name: title, cramped: false, darkness: 0};
 
     return (
       <Col lg={6} md={6} sm={12} className="player-widget">

@@ -8,24 +8,38 @@ import { Row, Grid, Col } from "react-bootstrap";
 import { DragDropContext } from "react-dnd";
 
 function getPainOfPlayer(player) {
-  const {start, current} = player.lep;
-  const actual_lep = start + ((current != null) ? current : 0);
+  const {start, current} = player.le;
+  const actual_le = start + ((current != null) ? current : 0);
   const stepsize = start / 4.0;
-  const c = Math.ceil(actual_lep/stepsize);
+  const c = Math.ceil(actual_le/stepsize);
   let num_pain = 4-c;
-  if(actual_lep <= 5) num_pain++;
+  if(actual_le <= 5) num_pain++;
   for (let p = 0; p < num_pain; p++)
-    player.states.push({name: "Schmerz", bonus: -1});
+    player.states.push({name: "Schmerz", glyph: "tint"});
 }
 
 function getStatesByLocation(player, location) {
-  if(location.cramped) {
-    player.states.push({name: "Eingeengt"});
-  }
+  if(location != null) {
+    if(location.cramped) {
+      player.states.push({name: "Eingeengt", glyph: "compressed"});
+    }
 
-  if(location.darkness > 0) {
-    for (let p = 1; p < location.darkness; p++)
-      player.states.push({name: "Dunkelheit", bonus: -1});
+    if(location.darkness > 0) {
+      player.states.push({name: "Dunkelheit", stufe: location.darkness, glyph: "cloud"});
+    }
+  }
+}
+
+function getStatesByGear(player) {
+  let armors = player.gear.filter(g => g.type == "armor");
+  let sum = 0;
+  for (let armor of armors) {
+    const {start, current} = armor.be;
+    const actual_be = start + ((current != null) ? current : 0);
+    sum += actual_be;
+  }
+  for(let b = 0; b < sum; b++) {
+    player.states.push({name: "Behinderung", glyph: "scale"});
   }
 }
 
@@ -34,6 +48,7 @@ function calculateStates(player, location) {
   player.states = [];
 
   getPainOfPlayer(player);
+  getStatesByGear(player);
   getStatesByLocation(player, location);
 }
 
@@ -58,10 +73,24 @@ class CombatProtocol extends React.Component {
     this.removeLocation = this.removeLocation.bind(this);
   }
 
+  updatePlayerStates(player) {
+    let location = null;
+
+    for(let l of this.state.locations) {
+      if(l.id == player.location) {
+        location = l; break;
+      }
+    }
+
+    calculateStates(player, location);
+  }
+
   addPlayer(player) {
     console.log("add player " + player.name);
     player.id = this.state.player_id + 1;
     this.setState((prevState) => {
+      //this.updatePlayerStates(player);
+
       return {
         players: prevState.players.concat([player]),
         player_id: prevState.player_id + 1
@@ -77,13 +106,8 @@ class CombatProtocol extends React.Component {
     {
       playersCopy[i][property] = new_value;
 
-      // get location of player by location_id
-      let location;
-      for(location of this.state.locations) {
-        if(location.id == playersCopy.Copy[i].location_id) return location;
-      }
+      this.updatePlayerStates(playersCopy[i]);
 
-      calculateStates(playersCopy[i], location);
       this.setState({
         players: playersCopy
       });
@@ -100,6 +124,9 @@ class CombatProtocol extends React.Component {
       let j = playersGear.findIndex(g => g.name == gear_id); // find index of gear
 
       playersGear[j][property] = new_value;
+
+      this.updatePlayerStates(playersCopy[i]);
+
       this.setState({
         players: playersCopy
       });
@@ -145,6 +172,7 @@ class CombatProtocol extends React.Component {
           if(p.location == location_id)
           {
             p.location = p.hero ? 0 : 1;
+            this.updatePlayerStates(p);
             console.log("move player " + p.id + " to " + p.location);
           }
         }
@@ -162,6 +190,9 @@ class CombatProtocol extends React.Component {
     const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
     if(i >= 0) {
       playersCopy[i].location = location_id;
+
+      this.updatePlayerStates(playersCopy[i]);
+
       this.setState({
         players: playersCopy
       });

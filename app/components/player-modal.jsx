@@ -31,9 +31,9 @@ export default class PlayerModal extends React.Component {
       player.name = value;
       return { player: player };
     } ) ;};
-    this.lepChange = (value) => { this.setState( (prevState) => {
+    this.leChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.lep = {start: value};
+      player.le = {start: value};
       return { player: player };
     } ) ;};
     this.iniChange = (value) => { this.setState( (prevState) => {
@@ -53,9 +53,9 @@ export default class PlayerModal extends React.Component {
       return { player: player };
     } ) ;};
 
-    this.aspChange = (value) => { this.setState( (prevState) => {
+    this.aeChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.asp = {start: value};
+      player.ae = {start: value};
       return { player: player };
     } ) ;};
 
@@ -64,9 +64,9 @@ export default class PlayerModal extends React.Component {
       player.priest = !player.priest;
       return { player: player };
     } ) ;};
-    this.kapChange = (value) => { this.setState( (prevState) => {
+    this.keChange = (value) => { this.setState( (prevState) => {
       let player = prevState.player;
-      player.kap = {start: value};
+      player.ke = {start: value};
       return { player: player };
     } ) ;};
 
@@ -129,7 +129,7 @@ export default class PlayerModal extends React.Component {
     const {hero} = this.props;
     const player_title_gen = hero ? "Helden" : "Gegners";
 
-    const {name, asp, kap, priest, mage, gear} = this.state.player;
+    const {name, ae, ke, priest, mage, gear} = this.state.player;
     let weapons = "";
     let armors = "";
     let rangeWeapons = "";
@@ -147,7 +147,7 @@ export default class PlayerModal extends React.Component {
         <Modal.Body>
           <Form horizontal>
             <StringInput controlId="playerName" title="Name" value={name} onChange={this.nameChange}/>
-            <NumericInput controlId="playerLep" title="Lebenspunkte" value={this.state.player.lep.start} onChange={this.lepChange}/>
+            <NumericInput controlId="playerLe" title="Lebensenergie" value={this.state.player.le.start} onChange={this.leChange}/>
             <NumericInput controlId="playerIni" title="Initiative" value={this.state.player.ini.start} onChange={this.iniChange}/>
              <NumericInput controlId="playerDodge" title="Ausweichen" value={this.state.player.dodge.start} onChange={this.dodgeChange}/>
             <FormGroup controlId="isMageCheckbox">
@@ -155,19 +155,19 @@ export default class PlayerModal extends React.Component {
                 Zauberer
               </Col>
               <Col sm={9}>
-                <Checkbox checked={mage} onChange={this.isMage} >Füge Astralpunkte hinzu</Checkbox>
+                <Checkbox checked={mage} onChange={this.isMage} >Füge Astralenergie hinzu</Checkbox>
               </Col>
             </FormGroup>
-            <NumericInput show={mage} controlId="playerAsp" title="Astralpunkte" value={asp.start} onChange={this.aspChange}/>
+            <NumericInput show={mage} controlId="playerAe" title="Astralenergie" value={ae.start} onChange={this.aeChange}/>
             <FormGroup controlId="isPriestCheckbox">
               <Col componentClass={ControlLabel} sm={3}>
                 Geweihter
               </Col>
               <Col sm={9}>
-                <Checkbox checked={priest} onChange={this.isPriest} >Füge Karmapunkte hinzu</Checkbox>
+                <Checkbox checked={priest} onChange={this.isPriest} >Füge Karmaenergie hinzu</Checkbox>
               </Col>
             </FormGroup>
-            <NumericInput show={priest} controlId="playerKap" title="Karmapunkte" value={kap.start} onChange={this.kapChange}/>
+            <NumericInput show={priest} controlId="playerKe" title="Karmaenergie" value={ke.start} onChange={this.keChange}/>
             <FormGroup controlId="armors">
               <Col sm={12}>
                 <GlyphButton glyph="plus" tooltip="Eine Neue Waffe hinzufügen" onClick={this.openWeaponModal}>
@@ -201,7 +201,9 @@ export default class PlayerModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.addPlayer}>{name} Hinufügen</Button>
+          <Button type="submit" onClick={this.addPlayer}>{name} Hinzufügen
+
+</Button>
         </Modal.Footer>
         <Modal
           show={this.state.showRangeModal}

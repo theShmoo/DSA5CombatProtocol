@@ -2,7 +2,7 @@ import React from "react";
 import NumericInput from "components/numeric-input";
 import StringInput from "components/string-input";
 import SuggestionInput from "components/suggestion-input";
-import {rangeWeaponList} from "components/weapon-list";
+import {rangeWeaponList} from "components/range-list";
 import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
 
 export default class RangeWeaponForm extends React.Component {
@@ -136,7 +136,9 @@ export default class RangeWeaponForm extends React.Component {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button type="submit" onClick={this.addWeapon}>{name} Hinufügen</Button>
+        <Button type="submit" onClick={this.addWeapon}>{name} Hinzufügen
+
+</Button>
       </Modal.Footer>
     </div>
     );

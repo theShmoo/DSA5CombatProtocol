@@ -1,6 +1,6 @@
 import React from "react";
 import NumericInput from "components/numeric-input";
-import {armorList} from "components/weapon-list";
+import {armorList} from "components/armor-list";
 import SuggestionInput from "components/suggestion-input";
 import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup } from "react-bootstrap";
 
@@ -82,7 +82,9 @@ export default class ArmorForm extends React.Component {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button type="submit" onClick={this.addArmor}>{name} Hinufügen</Button>
+        <Button type="submit" onClick={this.addArmor}>{name} Hinzufügen
+
+</Button>
       </Modal.Footer>
     </div>
     );

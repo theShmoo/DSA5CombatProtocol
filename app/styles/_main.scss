@@ -65,6 +65,10 @@ footer {
   cursor: pointer;
 }
 
+.glyph-state {
+  margin-left: 0.3em;
+}
+
 .numeric-control {
   padding-right: 0px;
 }
@@ -140,11 +144,11 @@ dl.dl-inline {
   background: $enemy-color-light;
 }
 
-h4.ini-hero {
+.ini-hero {
   color: $hero-color;
 }
 
-h4.ini-enemy {
+.ini-enemy {
   color: $enemy-color;
 }
 

@@ -38,8 +38,8 @@ export default class Armor extends React.Component {
     return (
       <Panel collapsible defaultExpanded={!isIgnored} header={this.renderHeader()}>
         <ListGroup fill>
-          <NumericControl title="RS" value={rs} onChange={this.rsChange} />
-          <NumericControl title="BE" value={be} onChange={this.beChange}/>
+          <NumericControl tooltip="Rüstungsschutz" title="RS" value={rs} onChange={this.rsChange} />
+          <NumericControl tooltip="Behinderung" title="BE" value={be} onChange={this.beChange}/>
         </ListGroup>
       </Panel>
     );

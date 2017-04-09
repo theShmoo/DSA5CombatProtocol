@@ -8,8 +8,14 @@ export default class MiniStates extends React.Component {
   }
 
   createMiniState(state, id) {
+
+    const {name, glyph, stufe} = state;
+    let disp_name = name;
+    if(stufe != undefined)
+      disp_name += " Stufe " + stufe;
+
     const tt = (
-      <Tooltip id="state">Zustand {state.name}</Tooltip>
+      <Tooltip id="state">Zustand {disp_name}</Tooltip>
     );
     return(
       <OverlayTrigger
@@ -18,7 +24,7 @@ export default class MiniStates extends React.Component {
         placement="top"
         delayShow={0}
         delayHide={100}>
-          <Glyphicon glyph="tint" className="glyph-state" />
+          <Glyphicon glyph={glyph} className="glyph-state" />
       </OverlayTrigger>
     );
   }

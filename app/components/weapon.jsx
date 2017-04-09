@@ -2,6 +2,7 @@ import React from "react";
 import PlayerProperty from "components/player-property";
 import NumericControl from "components/numeric-control";
 import GlyphButton from "components/glyph-button";
+import {getAtBoni, getPaBoni} from "components/bonusCalculations";
 import { ListGroup, Panel } from "react-bootstrap";
 
 export default class Weapon extends React.Component {
@@ -38,12 +39,16 @@ export default class Weapon extends React.Component {
     return (
         <Panel collapsible defaultExpanded={!isIgnored} header={this.renderHeader()}>
           <ListGroup fill>
-            <NumericControl title="AT" states={states} value={at} onChange={this.atChange} />
-            <NumericControl title="PA" states={states} value={pa} onChange={this.paChange}/>
-            <PlayerProperty title="RW">
+            <NumericControl tooltip="Attacke" title="AT"
+              states={getAtBoni(states, rw)}
+              value={at} onChange={this.atChange} />
+            <NumericControl tooltip="Parade" title="PA"
+              states={getPaBoni(states, rw)}
+              value={pa} onChange={this.paChange} />
+            <PlayerProperty tooltip="Reichweite" title="RW">
               {rw}
             </PlayerProperty>
-            <PlayerProperty title="TP">
+            <PlayerProperty tooltip="Trefferpunkte" title="TP">
               {grundschaden + bonus}
             </PlayerProperty>
           </ListGroup>

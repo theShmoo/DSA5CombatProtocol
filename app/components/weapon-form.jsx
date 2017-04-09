@@ -103,7 +103,9 @@ export default class WeaponForm extends React.Component {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button type="submit" onClick={this.addWeapon}>{name} Hinufügen</Button>
+        <Button type="submit" onClick={this.addWeapon}>{name} Hinzufügen
+
+</Button>
       </Modal.Footer>
     </div>
     );

@@ -126,11 +126,31 @@ export default class NumericControl extends React.Component {
       </span>);
   }
 
+  renderTitle(title, tooltip) {
+
+    if(tooltip) {
+      const tt = (<Tooltip id="info"> {tooltip} </Tooltip>);
+
+      return (
+        <OverlayTrigger
+          overlay={tt}
+          placement="top"
+          delayShow={0}
+          delayHide={100}>
+            <h4 className="list-group-item-heading">{title}</h4>
+        </OverlayTrigger>);
+    }
+    else
+    {
+      return <h4>{title}</h4>;
+    }
+  }
+
   render() {
-    const {title} = this.props;
+    const {title, tooltip} = this.props;
     return (
         <ListGroupItem
-          header={title}
+          header={this.renderTitle(title, tooltip)}
           onMouseOver={this.mouseOver}
           onMouseOut={this.mouseOut}
           className="numeric-control">

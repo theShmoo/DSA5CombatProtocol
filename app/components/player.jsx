@@ -5,6 +5,7 @@ import RangeWeapon from "components/range-weapon";
 import Armor from "components/armor";
 import NumericControl from "components/numeric-control";
 import MiniStates from "components/ministates";
+import {getPaBoni, getIniBoni} from "components/bonusCalculations";
 import { ItemTypes } from "components/constants";
 import { Col, Row, ListGroup, Panel } from "react-bootstrap";
 import { DragSource } from "react-dnd";
@@ -77,7 +78,7 @@ class Player extends Component {
   renderProperties() {
 
     const {player} = this.props;
-    const {lep, ini, dodge, asp, kap, mage, priest, states, gear} = player;
+    const {le, ini, dodge, ae, ke, mage, priest, states, gear} = player;
 
     let weapons = "";
     let armors = "";
@@ -93,11 +94,15 @@ class Player extends Component {
         <Col sm={12}>
           <Panel>
             <ListGroup fill>
-              <NumericControl title="Lep" name="lep" value={lep} onChange={this.onPropertyChange} />
-              <NumericControl title="Ini" name="ini" value={ini} onChange={this.onPropertyChange} />
-              <NumericControl title="AW" name="dodge" value={dodge} onChange={this.onPropertyChange} />
-              {mage && <NumericControl title="Asp" name="asp" value={asp} onChange={this.onPropertyChange} />}
-              {priest && <NumericControl title="Kap" name="kap" value={kap} onChange={this.onPropertyChange} />}
+              <NumericControl tooltip="Lebensenergie" title="LE" name="le" value={le} onChange={this.onPropertyChange} />
+              <NumericControl tooltip="Initiative" title="IN"
+                states={getIniBoni(states)}
+                name="ini" value={ini} onChange={this.onPropertyChange} />
+              <NumericControl tooltip="Ausweichen" title="AW"
+                states={getPaBoni(states, "kurz")}
+                name="dodge" value={dodge} onChange={this.onPropertyChange} />
+              {mage && <NumericControl tooltip="Astralenergie" title="AE" name="ae" value={ae} onChange={this.onPropertyChange} />}
+              {priest && <NumericControl tooltip="Karmalenergie" title="KE" name="ke" value={ke} onChange={this.onPropertyChange} />}
             </ListGroup>
           </Panel>
           {weapons}

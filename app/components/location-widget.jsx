@@ -13,22 +13,31 @@ export default class LocationWidget extends React.Component {
     this.closeModal = () => {this.setState({showModal: false});};
   }
 
+  renderLocations(locations){
+
+    if(locations.length > 0) {
+      let locs = locations.map((l, id) => {return (
+        <Col lg={4} md={6} sm={12} key={id}>
+          {l}
+        </Col>
+      );});
+
+      return (<Row>{locs}</Row>);
+    }
+    else {
+      return (<span />);
+    }
+  }
+
   render() {
     const title = "Orte";
     const add_tt = "Einen Ort hinzufügen";
-    let locations = this.props.locations.map((l, id) => {return (
-      <Col lg={4} md={6} sm={12} key={id}>
-        {l}
-      </Col>
-    );});
     return (
       <Col sm={12} className="location-widget">
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
           <h2>{title}</h2>
         </GlyphButton>
-        <Row>
-          {locations}
-        </Row>
+        {this.renderLocations(this.props.locations)}
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >

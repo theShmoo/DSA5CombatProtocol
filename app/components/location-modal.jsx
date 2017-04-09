@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup, Checkbox, MenuItem, DropdownButton } from "react-bootstrap";
+import ReactDOM from "react-dom";
+import { Modal, Form, Button, Col, Row, ControlLabel, FormControl, FormGroup, Checkbox, option } from "react-bootstrap";
 import StringInput from "components/string-input";
 
 export default class LocationModal extends React.Component {
@@ -31,9 +32,9 @@ export default class LocationModal extends React.Component {
       return { location: location };
     } ) ;};
 
-    this.darknessChanged = (event) => { this.setState( (prevState) => {
+    this.darknessChanged = () => { this.setState( (prevState) => {
       let location = prevState.location;
-      location.darkness = event.value;
+      location.darkness = ReactDOM.findDOMNode(this.select).value;
       return { location: location };
     } ) ;};
   }
@@ -41,11 +42,13 @@ export default class LocationModal extends React.Component {
   render() {
 
     const {name, cramped} = this.state.location;
+    const {isEdit} = this.state.props;
+    const title = isEdit ? "Bearbeiten des Ortes " + name : "Hinzufügen eines neuen Ortes";
 
     return (
       <div>
         <Modal.Header closeButton>
-          <Modal.Title>Hinzufügen eines neuen Ortes</Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal>
@@ -55,7 +58,9 @@ export default class LocationModal extends React.Component {
                 eingeengt
               </Col>
               <Col sm={9}>
-                <Checkbox checked={cramped} onChange={this.toggleCramped} >Dieser Ort ist {cramped ? "" : "nicht"} eingeengt</Checkbox>
+                <Checkbox checked={cramped} onChange={this.toggleCramped} >
+                  Dieser Ort ist {cramped ? "" : "nicht"} eingeengt
+                </Checkbox>
               </Col>
             </FormGroup>
             <FormGroup controlId="darknessDropdow">
@@ -63,19 +68,22 @@ export default class LocationModal extends React.Component {
                 Dunkelheit
               </Col>
               <Col sm={9}>
-                <DropdownButton title="Dunkelheit" onSelect={this.darknessChanged}>
-                  <MenuItem eventKey="0">Sicht klar und ungestört</MenuItem>
-                  <MenuItem eventKey="1">Stufe 1</MenuItem>
-                  <MenuItem eventKey="2">Stufe 2</MenuItem>
-                  <MenuItem eventKey="3">Stufe 3</MenuItem>
-                  <MenuItem eventKey="4">Stufe 4</MenuItem>
-                </DropdownButton>
+                <FormControl componentClass="select" placeholder="Dunkelheit"
+                  ref={select => { this.select = select; }} onChange={this.darknessChanged}>
+                  <option value="0">Sicht klar und ungestört</option>
+                  <option value="1">Stufe 1</option>
+                  <option value="1">Stufe 2</option>
+                  <option value="1">Stufe 3</option>
+                  <option value="1">Stufe 4</option>
+                </FormControl>
               </Col>
             </FormGroup>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.addLocation}>{name} Hinufügen</Button>
+          <Button type="submit" onClick={this.addLocation}>{name + isEdit ? "Bearbeiten" : "Hinzufügen"}
+
+</Button>
         </Modal.Footer>
       </div>
     );

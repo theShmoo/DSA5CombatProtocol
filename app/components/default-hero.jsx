@@ -2,15 +2,15 @@ const hero = {
   hero: 1,
   location: 0,
   name: "Hero",
-  lep: {start: 30},
+  le: {start: 30},
   ini: {start: 10},
   dodge: {start: 10},
   mage: false,
-  asp: {
+  ae: {
     start: 30
   },
   priest: false,
-  kap: {
+  ke: {
     start: 30
   },
   gear: [
@@ -37,15 +37,15 @@ const enemy = {
   hero: 0,
   location: 1,
   name: "Ork",
-  lep: {start: 30},
+  le: {start: 30},
   ini: {start: 10},
   dodge: {start: 10},
   mage: false,
-  asp: {
+  ae: {
     start: 30
   },
   priest: false,
-  kap: {
+  ke: {
     start: 30
   },
   gear: [

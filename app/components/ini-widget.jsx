@@ -1,5 +1,6 @@
 import React from "react";
 import NumericControl from "components/numeric-control";
+import {getIniBoni} from "components/bonusCalculations";
 import { Col, ListGroup, ListGroupItem, Badge, Panel } from "react-bootstrap";
 
 const HEADER = (
@@ -13,17 +14,21 @@ export default class IniWidget extends React.Component {
     this.iniChange = (id, name, value) => {this.props.onEdit(id, name, value);};
   }
 
-  createPlayer({id, ini, name, hero}) {
+  createPlayer({id, ini, name, hero, states}) {
     const title = (
-      <h4 className= {hero ? "ini-hero" : "ini-enemy"} >
+      <span className= {hero ? "ini-hero" : "ini-enemy"} >
         {name}
-      </h4>
+      </span>
     );
+    const ini_tt = "Initiative von " + name;
+
     return (
         <NumericControl
           key={id}
           title={title}
+          states={getIniBoni(states)}
           value={ini}
+          tooltip={ini_tt}
           name="ini"
           id={id}
           onChange={this.iniChange} />
