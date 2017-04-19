@@ -56,6 +56,8 @@ class Player extends Component {
     super(props);
 
     this.removePlayer = () => {this.props.onRemove(this.props.id);};
+    this.editPlayer = () => {this.props.onEdit(this.props.id);};
+    this.duplicatePlayer = () => {this.props.onDuplicate(this.props.id);};
     this.movePlayer = (player_id, location_id) => { this.props.onMove(player_id, location_id);};
 
     this.onPropertyChange = ( name, value) => {this.props.onEdit(this.props.id, name, value);};
@@ -115,13 +117,13 @@ class Player extends Component {
   renderTitle() {
     const {hero, name, states } = this.props.player;
     const player_string = hero ? "Helden" : "Gegner";
-    const remove_tt = "Entferne den " + player_string + " " + name;
+    const title = player_string + " " + name;
 
     return (
-      <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removePlayer} >
+      <EditButtons title={title} onRemove={this.removePlayer} onEdit={this.editPlayer} onDuplicate={this.duplicatePlayer} >
         <h4>{name}</h4>
         <MiniStates states={states} />
-      </GlyphButton>
+      </EditButtons>
     );
   }
 

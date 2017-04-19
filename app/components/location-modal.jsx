@@ -72,9 +72,9 @@ export default class LocationModal extends React.Component {
                   ref={select => { this.select = select; }} onChange={this.darknessChanged}>
                   <option value="0">Sicht klar und ungestört</option>
                   <option value="1">Stufe 1</option>
-                  <option value="1">Stufe 2</option>
-                  <option value="1">Stufe 3</option>
-                  <option value="1">Stufe 4</option>
+                  <option value="2">Stufe 2</option>
+                  <option value="3">Stufe 3</option>
+                  <option value="4">Stufe 4</option>
                 </FormControl>
               </Col>
             </FormGroup>
