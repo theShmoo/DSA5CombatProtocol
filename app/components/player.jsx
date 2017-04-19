@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import GlyphButton from "components/glyph-button";
+import EditButtons from "components/edit-buttons";
 import Weapon from "components/weapon";
 import RangeWeapon from "components/range-weapon";
 import Armor from "components/armor";

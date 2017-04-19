@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from "react";
-import GlyphButton from "components/glyph-button";
+import EditButtons from "components/edit-buttons";
 import Player from "components/player";
 import { ItemTypes } from "components/constants";
 import { Col, Row } from "react-bootstrap";
@@ -34,18 +34,22 @@ class Location extends Component {
   constructor(props) {
     super(props);
     this.removeLocation = () => {this.props.onRemove(this.props.location.id);};
+    this.duplicateLocation = () => {this.props.onDuplicate(this.props.location.id);};
+    this.editLocation = () => {this.props.onEdit(this.props.location.id);};
   }
 
   createPlayer(player) {
+    const {onPlayerRemove, onPlayerDuplicate, onPlayerMove, onPlayerEdit, onGearEdit} = this.props;
     return (
       <Player
         player={player}
         key={player.id}
         id={player.id}
-        onRemove={this.props.onPlayerRemove}
-        onMove={this.props.onPlayerMove}
-        onEdit={this.props.onPlayerEdit}
-        onGearEdit={this.props.onGearEdit}
+        onRemove={onPlayerRemove}
+        onDuplicate={onPlayerDuplicate}
+        onMove={onPlayerMove}
+        onEdit={onPlayerEdit}
+        onGearEdit={onGearEdit}
         />
     );
   }
@@ -68,10 +72,19 @@ class Location extends Component {
   renderTitle(name, removeable) {
     const title = (<h3>{name}</h3>);
 
-    const remove_tt = "Entferne diesen Ort";
-    const glyph = removeable ? <GlyphButton glyph="minus" tooltip={remove_tt} onClick={this.removeLocation}>{title}</GlyphButton> : {title};
-
-    return glyph;
+    if(!removeable) {
+      return title;
+    }
+    else {
+      return (
+        <EditButtons title={name}
+          onRemove={this.removeLocation}
+          onEdit={this.editLocation}
+          onDuplicate={this.duplicateLocation}>
+          {title}
+        </EditButtons>
+      );
+    }
   }
 
   render() {

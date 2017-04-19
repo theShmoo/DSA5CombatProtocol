@@ -42,7 +42,7 @@ export default class LocationModal extends React.Component {
   render() {
 
     const {name, cramped} = this.state.location;
-    const {isEdit} = this.state.props;
+    const {isEdit} = this.props;
     const title = isEdit ? "Bearbeiten des Ortes " + name : "Hinzufügen eines neuen Ortes";
 
     return (

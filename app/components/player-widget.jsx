@@ -14,7 +14,7 @@ export default class PlayerWidget extends React.Component {
   }
 
   render() {
-    const {hero} = this.props;
+    const {hero, players, onRemove, onDuplicate, onMove, onEdit, onGearEdit, onAdd} = this.props;
     const title = hero ? "Helden" : "Gegner";
     const add_tt = "Einen " + title + " hinzufügen";
     const location_id = hero ? 0 : 1;
@@ -28,19 +28,20 @@ export default class PlayerWidget extends React.Component {
         </GlyphButton>
         <Row>
           <Location
-            players={this.props.players}
+            players={players}
             id={location_id}
             location={location}
-            onPlayerRemove={this.props.onRemove}
-            onPlayerMove={this.props.onMove}
-            onPlayerEdit={this.props.onEdit}
-            onGearEdit={this.props.onGearEdit}
+            onPlayerRemove={onRemove}
+            onPlayerMove={onMove}
+            onPlayerDuplicate={onDuplicate}
+            onPlayerEdit={onEdit}
+            onGearEdit={onGearEdit}
             />
         </Row>
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <PlayerModal hero={hero} onAdd={this.props.onAdd} onClose={this.closeModal}/>
+          <PlayerModal hero={hero} onAdd={onAdd} onClose={this.closeModal}/>
         </Modal>
       </Col>
     );

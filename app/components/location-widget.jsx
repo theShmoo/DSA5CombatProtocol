@@ -41,7 +41,7 @@ export default class LocationWidget extends React.Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <LocationModal onAdd={this.props.onAdd} onClose={this.closeModal}/>
+          <LocationModal onAdd={this.props.onAdd} isEdit={false} onClose={this.closeModal}/>
         </Modal>
       </Col>
     );

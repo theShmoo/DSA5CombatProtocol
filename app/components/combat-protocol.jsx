@@ -68,9 +68,11 @@ class CombatProtocol extends React.Component {
     this.editPlayer = this.editPlayer.bind(this);
     this.editGear = this.editGear.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
+    this.duplicatePlayer = this.duplicatePlayer.bind(this);
 
     this.addLocation = this.addLocation.bind(this);
     this.removeLocation = this.removeLocation.bind(this);
+    this.duplicateLocation = this.duplicateLocation.bind(this);
   }
 
   updatePlayerStates(player) {
@@ -111,6 +113,18 @@ class CombatProtocol extends React.Component {
       this.setState({
         players: playersCopy
       });
+    }
+  }
+
+  duplicatePlayer(player_id) {
+    console.log("Duplicate player " + player_id );
+    let playersCopy = this.state.players.slice();
+    let i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    if(i >= 0)
+    {
+      // deep copy of player:
+      let playerDuplicate = JSON.parse(JSON.stringify( playersCopy[i] ));
+      this.addPlayer(playerDuplicate);
     }
   }
 
@@ -185,6 +199,17 @@ class CombatProtocol extends React.Component {
     }
   }
 
+  duplicateLocation(location_id) {
+    console.log("Duplicate Location " + location_id);
+    let locationsCopy = this.state.locations.slice();
+    let i = locationsCopy.findIndex(l => l.id == location_id); // find index of location
+    if(i >= 0)
+    {
+      let locationDuplicate = JSON.parse(JSON.stringify(locationsCopy[i]));
+      this.addLocation(locationDuplicate);
+    }
+  }
+
   movePlayer(player_id, location_id) {
     let playersCopy = this.state.players.slice();
     const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
@@ -208,7 +233,9 @@ class CombatProtocol extends React.Component {
         removeable showtitle
         players={this.state.players}
         onRemove={this.removeLocation}
+        onDuplicate={this.duplicateLocation}
         onPlayerRemove={this.removePlayer}
+        onPlayerDuplicate={this.duplicatePlayer}
         onPlayerEdit={this.editPlayer}
         onPlayerMove={this.movePlayer}
         onGearEdit={this.editGear}
@@ -226,6 +253,7 @@ class CombatProtocol extends React.Component {
           players={this.state.players}
           onAdd={this.addPlayer}
           onRemove={this.removePlayer}
+          onDuplicate={this.duplicatePlayer}
           onEdit={this.editPlayer}
           onMove={this.movePlayer}
           onGearEdit={this.editGear}
@@ -234,6 +262,7 @@ class CombatProtocol extends React.Component {
           players={this.state.players}
           onAdd={this.addPlayer}
           onRemove={this.removePlayer}
+          onDuplicate={this.duplicatePlayer}
           onEdit={this.editPlayer}
           onMove={this.movePlayer}
           onGearEdit={this.editGear}
