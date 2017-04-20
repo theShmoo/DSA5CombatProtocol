@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import EditButtons from "components/edit-buttons";
 import Player from "components/player";
+import LocationModal from "components/location-modal";
 import { ItemTypes } from "components/constants";
 import { Col, Row } from "react-bootstrap";
 import { DropTarget } from "react-dnd";
@@ -33,13 +34,18 @@ class Location extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = { showModal: false };
+    this.openModal = () => {this.setState({showModal: true});};
+    this.closeModal = () => {this.setState({showModal: false});};
+
     this.removeLocation = () => {this.props.onRemove(this.props.location.id);};
     this.duplicateLocation = () => {this.props.onDuplicate(this.props.location.id);};
-    this.editLocation = () => {this.props.onEdit(this.props.location.id);};
+    this.editLocation = (location) => {this.props.onEdit(this.props.location.id, location);};
   }
 
   createPlayer(player) {
-    const {onPlayerRemove, onPlayerDuplicate, onPlayerMove, onPlayerEdit, onGearEdit} = this.props;
+    const {onPlayerRemove, onPlayerDuplicate, onPlayerMove, onPlayerEdit, onPlayerEditProperty, onGearEdit} = this.props;
     return (
       <Player
         player={player}
@@ -49,6 +55,7 @@ class Location extends Component {
         onDuplicate={onPlayerDuplicate}
         onMove={onPlayerMove}
         onEdit={onPlayerEdit}
+        onEditProperty={onPlayerEditProperty}
         onGearEdit={onGearEdit}
         />
     );
@@ -79,7 +86,7 @@ class Location extends Component {
       return (
         <EditButtons title={name}
           onRemove={this.removeLocation}
-          onEdit={this.editLocation}
+          onEdit={this.openModal}
           onDuplicate={this.duplicateLocation}>
           {title}
         </EditButtons>
@@ -108,6 +115,7 @@ class Location extends Component {
           {!isOver && canDrop && this.renderOverlay("yellow")}
           {isOver && canDrop && this.renderOverlay("green")}
         </div>
+        <LocationModal location={location} onSubmit={this.editLocation} onClose={this.closeModal} />
       </div>
     );
   }

@@ -65,7 +65,7 @@ class CombatProtocol extends React.Component {
 
     this.movePlayer = this.movePlayer.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
-    this.editPlayer = this.editPlayer.bind(this);
+    this.editPlayerProperty = this.editPlayerProperty.bind(this);
     this.editGear = this.editGear.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
     this.duplicatePlayer = this.duplicatePlayer.bind(this);
@@ -73,6 +73,7 @@ class CombatProtocol extends React.Component {
     this.addLocation = this.addLocation.bind(this);
     this.removeLocation = this.removeLocation.bind(this);
     this.duplicateLocation = this.duplicateLocation.bind(this);
+    this.editLocation = this.editLocation.bind(this);
   }
 
   updatePlayerStates(player) {
@@ -100,7 +101,7 @@ class CombatProtocol extends React.Component {
     });
   }
 
-  editPlayer(player_id, property, new_value) {
+  editPlayerProperty(player_id, property, new_value) {
     console.log("Edit property " + property + " of player " + player_id );
     let playersCopy = this.state.players.slice();
     let i = playersCopy.findIndex(p => p.id == player_id); // find index of player
@@ -171,6 +172,20 @@ class CombatProtocol extends React.Component {
     }
   }
 
+  movePlayer(player_id, location_id) {
+    let playersCopy = this.state.players.slice();
+    const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    if(i >= 0) {
+      playersCopy[i].location = location_id;
+
+      this.updatePlayerStates(playersCopy[i]);
+
+      this.setState({
+        players: playersCopy
+      });
+    }
+  }
+
   removeLocation(location_id) {
     console.log("Remove Location " + location_id);
     let locationsCopy = this.state.locations.slice();
@@ -210,16 +225,15 @@ class CombatProtocol extends React.Component {
     }
   }
 
-  movePlayer(player_id, location_id) {
-    let playersCopy = this.state.players.slice();
-    const i = playersCopy.findIndex(p => p.id == player_id); // find index of player
-    if(i >= 0) {
-      playersCopy[i].location = location_id;
-
-      this.updatePlayerStates(playersCopy[i]);
-
+  editLocation(location_id, edit_location) {
+    console.log("Edit Location " + location_id);
+    let locationsCopy = this.state.locations.slice();
+    let i = locationsCopy.findIndex(l => l.id == location_id); // find index of location
+    if(i >= 0)
+    {
+      locationsCopy[i] = edit_location;
       this.setState({
-        players: playersCopy
+        locations: locationsCopy
       });
     }
   }
@@ -234,8 +248,10 @@ class CombatProtocol extends React.Component {
         players={this.state.players}
         onRemove={this.removeLocation}
         onDuplicate={this.duplicateLocation}
+        onEdit={this.editLocation}
         onPlayerRemove={this.removePlayer}
         onPlayerDuplicate={this.duplicatePlayer}
+        onPlayerEditProperty={this.editPlayerProperty}
         onPlayerEdit={this.editPlayer}
         onPlayerMove={this.movePlayer}
         onGearEdit={this.editGear}
@@ -247,13 +263,14 @@ class CombatProtocol extends React.Component {
     let locations = this.state.locations.map((l) => {return this.createLocation(l);});
     return (
       <Grid fluid>
-        <IniWidget players={this.state.players} onEdit={this.editPlayer}/>
+        <IniWidget players={this.state.players} onEditProperty={this.editPlayerProperty}/>
         <PlayerWidget
           hero
           players={this.state.players}
           onAdd={this.addPlayer}
           onRemove={this.removePlayer}
           onDuplicate={this.duplicatePlayer}
+          onEditProperty={this.editPlayerProperty}
           onEdit={this.editPlayer}
           onMove={this.movePlayer}
           onGearEdit={this.editGear}
@@ -263,6 +280,7 @@ class CombatProtocol extends React.Component {
           onAdd={this.addPlayer}
           onRemove={this.removePlayer}
           onDuplicate={this.duplicatePlayer}
+          onEditProperty={this.editPlayerProperty}
           onEdit={this.editPlayer}
           onMove={this.movePlayer}
           onGearEdit={this.editGear}

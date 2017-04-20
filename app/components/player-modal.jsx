@@ -15,15 +15,13 @@ export default class PlayerModal extends React.Component {
 
   constructor(props) {
     super(props);
-    const player = props.hero ? newHero() : newEnemy();
     this.state = {
-      player : player,
       showRangeModal: false,
       showWeaponModal: false,
       showArmorModal: false
     };
-    this.addPlayer = () => {
-      this.props.onAdd(this.state.player);
+    this.submit = () => {
+      this.props.onSubmit(this.state.player);
       this.props.onClose();
     };
     this.nameChange = (value) => { this.setState( (prevState) => {
@@ -88,6 +86,25 @@ export default class PlayerModal extends React.Component {
     this.addGear = this.addGear.bind(this);
   }
 
+  isEdit() {
+    return this.props.player != undefined;
+  }
+
+  onComponentMount() {
+    let player;
+    if( !this.isEdit() ) {
+      player = this.props.hero ? newHero() : newEnemy();
+    }
+    else {
+      // deep copy the player (to be able to cancle the modification)
+      player = JSON.parse(JSON.stringify(this.props.player));
+    }
+
+    this.setState({
+      player: player
+    });
+  }
+
   addGear (gear) {
     console.log("add gear " + gear.name);
     this.setState((prevState) => {
@@ -128,6 +145,7 @@ export default class PlayerModal extends React.Component {
   render() {
     const {hero} = this.props;
     const player_title_gen = hero ? "Helden" : "Gegners";
+    const verb = this.isEdit() ? "Bearbeiten" : "Hinzufügen";
 
     const {name, ae, ke, priest, mage, gear} = this.state.player;
     let weapons = "";
@@ -142,7 +160,7 @@ export default class PlayerModal extends React.Component {
     return (
       <div>
         <Modal.Header closeButton>
-          <Modal.Title>Hinzufügen eines neuen {player_title_gen}</Modal.Title>
+          <Modal.Title>{verb} eines {player_title_gen}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form horizontal>
@@ -201,7 +219,7 @@ export default class PlayerModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.addPlayer}>{name} Hinzufügen
+          <Button type="submit" onClick={this.submit}>{name} {verb}
 
 </Button>
         </Modal.Footer>

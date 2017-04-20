@@ -6,6 +6,7 @@ import RangeWeapon from "components/range-weapon";
 import Armor from "components/armor";
 import NumericControl from "components/numeric-control";
 import MiniStates from "components/ministates";
+import PlayerModal from "components/player-modal";
 import {getPaBoni, getIniBoni} from "components/bonusCalculations";
 import { ItemTypes } from "components/constants";
 import { Col, Row, ListGroup, Panel } from "react-bootstrap";
@@ -56,12 +57,16 @@ class Player extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { showModal: false };
+    this.openModal = () => {this.setState({showModal: true});};
+    this.closeModal = () => {this.setState({showModal: false});};
+
     this.removePlayer = () => {this.props.onRemove(this.props.id);};
-    this.editPlayer = () => {this.props.onEdit(this.props.id);};
+    this.editPlayer = (player) => {this.props.onEdit(this.props.id, player);};
     this.duplicatePlayer = () => {this.props.onDuplicate(this.props.id);};
     this.movePlayer = (player_id, location_id) => { this.props.onMove(player_id, location_id);};
 
-    this.onPropertyChange = ( name, value) => {this.props.onEdit(this.props.id, name, value);};
+    this.onPropertyChange = ( name, value) => {this.props.onEditProperty(this.props.id, name, value);};
     this.onGearChange = ( name, prop, value) => {this.props.onGearEdit(this.props.id, name, prop, value);};
   }
 
@@ -121,9 +126,10 @@ class Player extends Component {
     const title = player_string + " " + name;
 
     return (
-      <EditButtons title={title} onRemove={this.removePlayer} onEdit={this.editPlayer} onDuplicate={this.duplicatePlayer} >
+      <EditButtons title={title} onRemove={this.removePlayer} onEdit={this.openModal} onDuplicate={this.duplicatePlayer} >
         <h4>{name}</h4>
         <MiniStates states={states} />
+        <PlayerModal player={this.props.player} onSubmit={this.editPlayer} onClose={this.closeModal} />
       </EditButtons>
     );
   }
