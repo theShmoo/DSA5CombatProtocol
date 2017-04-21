@@ -3,7 +3,7 @@ import EditButtons from "components/edit-buttons";
 import Player from "components/player";
 import LocationModal from "components/location-modal";
 import { ItemTypes } from "components/constants";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Modal } from "react-bootstrap";
 import { DropTarget } from "react-dnd";
 
 const locationTarget = {
@@ -115,7 +115,11 @@ class Location extends Component {
           {!isOver && canDrop && this.renderOverlay("yellow")}
           {isOver && canDrop && this.renderOverlay("green")}
         </div>
-        <LocationModal location={location} onSubmit={this.editLocation} onClose={this.closeModal} />
+        <Modal
+          show={this.state.showModal}
+          onHide={this.closeModal} >
+          <LocationModal location={location} onSubmit={this.editLocation} onClose={this.closeModal} />
+        </Modal>
       </div>
     );
   }

@@ -7,7 +7,13 @@ export default class LocationModal extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      location: {
+        name: "Ort",
+        cramped: false,
+        darkness: 0
+      }
+    };
 
     this.nameChange = (value) => { this.setState( (prevState) => {
       let location = prevState.location;
@@ -38,22 +44,14 @@ export default class LocationModal extends React.Component {
   }
 
   onComponentMount() {
-    let location;
-    if( !this.isEdit() ) {
-      location = {
-        name: "Ort",
-        cramped: false,
-        darkness: 0
-      };
-    }
-    else {
+    if( this.isEdit() ) {
       // deep copy the location (to be able to cancle the modification)
-      location = JSON.parse(JSON.stringify(this.props.location));
-    }
+      const location = JSON.parse(JSON.stringify(this.props.location));
 
-    this.setState({
-      location: location
-    });
+      this.setState({
+        location: location
+      });
+    }
   }
 
   render() {

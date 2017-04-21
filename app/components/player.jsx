@@ -9,7 +9,7 @@ import MiniStates from "components/ministates";
 import PlayerModal from "components/player-modal";
 import {getPaBoni, getIniBoni} from "components/bonusCalculations";
 import { ItemTypes } from "components/constants";
-import { Col, Row, ListGroup, Panel } from "react-bootstrap";
+import { Col, Row, ListGroup, Panel, Modal } from "react-bootstrap";
 import { DragSource } from "react-dnd";
 
 const playerSource = {
@@ -129,7 +129,11 @@ class Player extends Component {
       <EditButtons title={title} onRemove={this.removePlayer} onEdit={this.openModal} onDuplicate={this.duplicatePlayer} >
         <h4>{name}</h4>
         <MiniStates states={states} />
-        <PlayerModal player={this.props.player} onSubmit={this.editPlayer} onClose={this.closeModal} />
+        <Modal
+          show={this.state.showModal}
+          onHide={this.closeModal} >
+          <PlayerModal player={this.props.player} onSubmit={this.editPlayer} onClose={this.closeModal} />
+        </Modal>
       </EditButtons>
     );
   }

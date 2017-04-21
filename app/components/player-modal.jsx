@@ -16,6 +16,7 @@ export default class PlayerModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      player: this.props.hero ? newHero() : newEnemy(),
       showRangeModal: false,
       showWeaponModal: false,
       showArmorModal: false
@@ -91,18 +92,14 @@ export default class PlayerModal extends React.Component {
   }
 
   onComponentMount() {
-    let player;
-    if( !this.isEdit() ) {
-      player = this.props.hero ? newHero() : newEnemy();
-    }
-    else {
+    if( this.isEdit() ) {
       // deep copy the player (to be able to cancle the modification)
-      player = JSON.parse(JSON.stringify(this.props.player));
-    }
+      const player = JSON.parse(JSON.stringify(this.props.player));
 
-    this.setState({
-      player: player
-    });
+      this.setState({
+        player: player
+      });
+    }
   }
 
   addGear (gear) {
