@@ -4,52 +4,20 @@ import PlayerWidget from "components/player-widget";
 import LocationWidget from "components/location-widget";
 import Location from "components/location";
 import IniWidget from "components/ini-widget";
+import {calculateStates} from "components/state-calculations";
 import { Row, Grid, Col } from "react-bootstrap";
 import { DragDropContext } from "react-dnd";
 
-function getPainOfPlayer(player) {
-  const {start, current} = player.le;
-  const actual_le = start + ((current != null) ? current : 0);
-  const stepsize = start / 4.0;
-  const c = Math.ceil(actual_le/stepsize);
-  let num_pain = 4-c;
-  if(actual_le <= 5) num_pain++;
-  for (let p = 0; p < num_pain; p++)
-    player.states.push({name: "Schmerz", glyph: "tint"});
-}
-
-function getStatesByLocation(player, location) {
-  if(location != null) {
-    if(location.cramped) {
-      player.states.push({name: "Eingeengt", glyph: "compressed"});
-    }
-
-    if(location.darkness > 0) {
-      player.states.push({name: "Dunkelheit", stufe: location.darkness, glyph: "cloud"});
-    }
+// checks if the local storage exists
+function supportsLocalStorage() {
+  var mod = "test";
+  try {
+    localStorage.setItem(mod, mod);
+    localStorage.removeItem(mod);
+    return true;
+  } catch (e) {
+    return false;
   }
-}
-
-function getStatesByGear(player) {
-  let armors = player.gear.filter(g => g.type == "armor");
-  let sum = 0;
-  for (let armor of armors) {
-    const {start, current} = armor.be;
-    const actual_be = start + ((current != null) ? current : 0);
-    sum += actual_be;
-  }
-  for(let b = 0; b < sum; b++) {
-    player.states.push({name: "Behinderung", glyph: "scale"});
-  }
-}
-
-function calculateStates(player, location) {
-  // reset states of player which are then set again
-  player.states = [];
-
-  getPainOfPlayer(player);
-  getStatesByGear(player);
-  getStatesByLocation(player, location);
 }
 
 class CombatProtocol extends React.Component {
@@ -66,6 +34,7 @@ class CombatProtocol extends React.Component {
     this.movePlayer = this.movePlayer.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
     this.editPlayerProperty = this.editPlayerProperty.bind(this);
+    this.editPlayer = this.editPlayer.bind(this);
     this.editGear = this.editGear.bind(this);
     this.removePlayer = this.removePlayer.bind(this);
     this.duplicatePlayer = this.duplicatePlayer.bind(this);
@@ -74,6 +43,35 @@ class CombatProtocol extends React.Component {
     this.removeLocation = this.removeLocation.bind(this);
     this.duplicateLocation = this.duplicateLocation.bind(this);
     this.editLocation = this.editLocation.bind(this);
+
+    this.hasLocalStorage = supportsLocalStorage();
+  }
+
+  loadFromLocalStorage () {
+    // load local state
+    if(this.hasLocalStorage) {
+      console.log("load local storage");
+      var storedState = JSON.parse(localStorage.getItem("state"));
+      if(storedState)
+      {
+        this.setState({
+          locations: storedState.locations,
+          location_id: storedState.location_id,
+          players: storedState.players,
+          player_id: storedState.player_id,
+        });
+      }
+    }
+  }
+
+  componentWillMount() {
+    this.loadFromLocalStorage();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(this.hasLocalStorage) {
+      localStorage.setItem("state", JSON.stringify(nextState));
+    }
   }
 
   updatePlayerStates(player) {
@@ -110,7 +108,20 @@ class CombatProtocol extends React.Component {
       playersCopy[i][property] = new_value;
 
       this.updatePlayerStates(playersCopy[i]);
+      this.setState({
+        players: playersCopy
+      });
+    }
+  }
 
+  editPlayer(player_id, edit_player) {
+    console.log("Edit player " + player_id );
+    let playersCopy = this.state.players.slice();
+    let i = playersCopy.findIndex(p => p.id == player_id); // find index of player
+    if(i >= 0)
+    {
+      playersCopy[i] = edit_player;
+      this.updatePlayerStates(playersCopy[i]);
       this.setState({
         players: playersCopy
       });
@@ -148,17 +159,6 @@ class CombatProtocol extends React.Component {
     }
   }
 
-  addLocation(location) {
-    location.id = this.state.location_id + 1;
-    console.log("add location " + location.id);
-    this.setState((prevState) => {
-      return {
-        locations: prevState.locations.concat([location]),
-        location_id: prevState.location_id + 1
-      };
-    });
-  }
-
   removePlayer(player_id) {
     console.log("Remove player " + player_id);
     let playersCopy = this.state.players.slice();
@@ -185,6 +185,18 @@ class CombatProtocol extends React.Component {
       });
     }
   }
+
+  addLocation(location) {
+    location.id = this.state.location_id + 1;
+    console.log("add location " + location.id);
+    this.setState((prevState) => {
+      return {
+        locations: prevState.locations.concat([location]),
+        location_id: prevState.location_id + 1
+      };
+    });
+  }
+
 
   removeLocation(location_id) {
     console.log("Remove Location " + location_id);

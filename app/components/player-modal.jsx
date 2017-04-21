@@ -203,9 +203,7 @@ export default class PlayerModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.submit}>{name} {verb}
-
-</Button>
+          <Button type="submit" onClick={this.submit}>{name} {verb}</Button>
         </Modal.Footer>
         <Modal
           show={this.state.showRangeModal}

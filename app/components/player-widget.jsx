@@ -43,7 +43,7 @@ export default class PlayerWidget extends React.Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <PlayerModal isEdit={false} player={hero ? this.defaultHero : this.defaultEnemy} onSubmit={onAdd} onClose={this.closeModal}/>
+          <PlayerModal isEdit={false} player={hero ? defaultHero : defaultEnemy} onSubmit={onAdd} onClose={this.closeModal}/>
         </Modal>
       </Col>
     );

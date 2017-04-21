@@ -38,9 +38,10 @@ export default class LocationModal extends React.Component {
 
   render() {
 
-    const {name, cramped} = this.state.location;
-    const title = this.props.isEdit ? "Bearbeiten des Ortes " + name : "Hinzufügen eines neuen Ortes";
+    const {name, cramped, darkness} = this.state.location;
+    const verb = this.props.isEdit ? "Bearbeiten" : "Hinzufügen";
 
+    const title = verb + " von " + name;
     return (
       <div>
         <Modal.Header closeButton>
@@ -64,8 +65,7 @@ export default class LocationModal extends React.Component {
                 Dunkelheit
               </Col>
               <Col sm={9}>
-                <FormControl componentClass="select" placeholder="Dunkelheit"
-                  ref={select => { this.select = select; }} onChange={this.darknessChanged}>
+                <FormControl componentClass="select" defaultValue={darkness} ref={select => { this.select = select; }} onChange={this.darknessChanged}>
                   <option value="0">Sicht klar und ungestört</option>
                   <option value="1">Stufe 1</option>
                   <option value="2">Stufe 2</option>
@@ -77,9 +77,7 @@ export default class LocationModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.submit}>{name + this.props.isEdit ? "Bearbeiten" : "Hinzufügen"}
-
-</Button>
+          <Button type="submit" onClick={this.submit}>{name} {verb}</Button>
         </Modal.Footer>
       </div>
     );
