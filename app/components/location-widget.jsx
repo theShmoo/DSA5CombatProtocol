@@ -32,6 +32,12 @@ export default class LocationWidget extends React.Component {
   render() {
     const title = "Orte";
     const add_tt = "Einen Ort hinzufügen";
+    const defaultLocation = {
+        name: "Ort",
+        cramped: false,
+        darkness: 0
+      };
+
     return (
       <Col sm={12} className="location-widget">
         <GlyphButton glyph="plus" tooltip={add_tt} onClick={this.openModal}>
@@ -41,7 +47,7 @@ export default class LocationWidget extends React.Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <LocationModal onSubmit={this.props.onAdd} onClose={this.closeModal} />
+          <LocationModal isEdit={false} location={defaultLocation} onSubmit={this.props.onAdd} onClose={this.closeModal} />
         </Modal>
       </Col>
     );

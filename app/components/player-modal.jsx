@@ -1,6 +1,5 @@
 import React from "react";
 import { Modal, Tooltip, OverlayTrigger, Button, Form, Col, Row, ControlLabel, FormControl, FormGroup, Checkbox } from "react-bootstrap";
-import {newHero, newEnemy} from "components/default-hero";
 import NumericInput from "components/numeric-input";
 import StringInput from "components/string-input";
 import Weapon from "components/weapon";
@@ -15,8 +14,10 @@ export default class PlayerModal extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      player: this.props.hero ? newHero() : newEnemy(),
+      // deep copy the player to be able to cancle the modification
+      player: JSON.parse(JSON.stringify(this.props.player)),
       showRangeModal: false,
       showWeaponModal: false,
       showArmorModal: false
@@ -87,21 +88,6 @@ export default class PlayerModal extends React.Component {
     this.addGear = this.addGear.bind(this);
   }
 
-  isEdit() {
-    return this.props.player != undefined;
-  }
-
-  onComponentMount() {
-    if( this.isEdit() ) {
-      // deep copy the player (to be able to cancle the modification)
-      const player = JSON.parse(JSON.stringify(this.props.player));
-
-      this.setState({
-        player: player
-      });
-    }
-  }
-
   addGear (gear) {
     console.log("add gear " + gear.name);
     this.setState((prevState) => {
@@ -140,11 +126,12 @@ export default class PlayerModal extends React.Component {
   }
 
   render() {
-    const {hero} = this.props;
-    const player_title_gen = hero ? "Helden" : "Gegners";
-    const verb = this.isEdit() ? "Bearbeiten" : "Hinzufügen";
+    const {isEdit} = this.props;
+    const {name, ae, ke, priest, mage, gear, hero} = this.state.player;
 
-    const {name, ae, ke, priest, mage, gear} = this.state.player;
+    const player_title_gen = hero ? "Helden" : "Gegners";
+    const verb = isEdit ? "Bearbeiten" : "Hinzufügen";
+
     let weapons = "";
     let armors = "";
     let rangeWeapons = "";

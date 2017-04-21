@@ -8,11 +8,8 @@ export default class LocationModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: {
-        name: "Ort",
-        cramped: false,
-        darkness: 0
-      }
+      // deep copy to be able to cancle modification
+      location: JSON.parse(JSON.stringify(this.props.location))
     };
 
     this.nameChange = (value) => { this.setState( (prevState) => {
@@ -39,25 +36,10 @@ export default class LocationModal extends React.Component {
     } ) ;};
   }
 
-  isEdit() {
-    return this.props.location != undefined;
-  }
-
-  onComponentMount() {
-    if( this.isEdit() ) {
-      // deep copy the location (to be able to cancle the modification)
-      const location = JSON.parse(JSON.stringify(this.props.location));
-
-      this.setState({
-        location: location
-      });
-    }
-  }
-
   render() {
 
     const {name, cramped} = this.state.location;
-    const title = this.isEdit() ? "Bearbeiten des Ortes " + name : "Hinzufügen eines neuen Ortes";
+    const title = this.props.isEdit ? "Bearbeiten des Ortes " + name : "Hinzufügen eines neuen Ortes";
 
     return (
       <div>
@@ -95,7 +77,7 @@ export default class LocationModal extends React.Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" onClick={this.submit}>{name + this.isEdit() ? "Bearbeiten" : "Hinzufügen"}
+          <Button type="submit" onClick={this.submit}>{name + this.props.isEdit ? "Bearbeiten" : "Hinzufügen"}
 
 </Button>
         </Modal.Footer>

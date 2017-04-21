@@ -1,4 +1,4 @@
-const hero = {
+export const defaultHero = {
   hero: 1,
   location: 0,
   name: "Hero",
@@ -33,7 +33,7 @@ const hero = {
   states: []
 };
 
-const enemy = {
+export const defaultEnemy = {
   hero: 0,
   location: 1,
   name: "Ork",
@@ -67,13 +67,4 @@ const enemy = {
   ],
   states: []
 };
-
-export function newHero() {
-  return JSON.parse(JSON.stringify( hero ));
-}
-
-export function newEnemy() {
-  return JSON.parse(JSON.stringify( enemy ));
-}
-
 

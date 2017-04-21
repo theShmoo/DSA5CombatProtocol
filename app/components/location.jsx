@@ -118,7 +118,7 @@ class Location extends Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <LocationModal location={location} onSubmit={this.editLocation} onClose={this.closeModal} />
+          <LocationModal isEdit={true} location={location} onSubmit={this.editLocation} onClose={this.closeModal} />
         </Modal>
       </div>
     );

@@ -3,6 +3,7 @@ import GlyphButton from "components/glyph-button";
 import { Col, Row, Modal } from "react-bootstrap";
 import Location from "components/location";
 import PlayerModal from "components/player-modal";
+import {defaultHero, defaultEnemy} from "components/default-player";
 
 export default class PlayerWidget extends React.Component {
 
@@ -42,7 +43,7 @@ export default class PlayerWidget extends React.Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <PlayerModal hero={hero} onSubmit={onAdd} onClose={this.closeModal}/>
+          <PlayerModal isEdit={false} player={hero ? this.defaultHero : this.defaultEnemy} onSubmit={onAdd} onClose={this.closeModal}/>
         </Modal>
       </Col>
     );

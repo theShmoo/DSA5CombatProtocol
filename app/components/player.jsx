@@ -132,7 +132,7 @@ class Player extends Component {
         <Modal
           show={this.state.showModal}
           onHide={this.closeModal} >
-          <PlayerModal player={this.props.player} onSubmit={this.editPlayer} onClose={this.closeModal} />
+          <PlayerModal isEdit={true} player={this.props.player} onSubmit={this.editPlayer} onClose={this.closeModal} />
         </Modal>
       </EditButtons>
     );
