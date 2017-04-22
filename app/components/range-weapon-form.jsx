@@ -43,7 +43,6 @@ export default class RangeWeaponForm extends React.Component {
     const {name, lade, munition} = this.state;
     bOk &= name != "";
     bOk &= lade != "";
-    bOk &= munition != "";
     return bOk;
   }
 
@@ -131,7 +130,7 @@ export default class RangeWeaponForm extends React.Component {
               <NumericInput controlId="weit" title="Weit" value={reichweite.weit} onChange={this.reichweiteWeitChange}/>
             </Col>
           </FormGroup>
-          <StringInput controlId="weaponRW" title="Munitions Name" value={munition} onChange={this.rwChange} />
+          <StringInput controlId="munition" title="Munitions Name" value={munition} onChange={this.munitionChange} />
           <StringInput controlId="weaponLade" title="Ladezeit" value={lade} onChange={this.ladeChange} />
         </Form>
       </Modal.Body>
