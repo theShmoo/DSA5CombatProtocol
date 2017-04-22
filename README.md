@@ -1,10 +1,8 @@
-# Brunch + Babel/ES6
-
-This is a modern JS skeleton for [Brunch](http://brunch.io).
+# DSA 5 Combat Protocol
 
 ## Installation
 
-Clone this repo manually or use `brunch new dir -s es6`
+Clone this repo!
 
 ## Getting started
 
@@ -20,9 +18,18 @@ Clone this repo manually or use `brunch new dir -s es6`
     * Place static files you want to be copied from `app/assets/` to `public/`.
     * [Brunch site](http://brunch.io), [Getting started guide](https://github.com/brunch/brunch-guide#readme)
 
-## ES-next
+## Documentation and How To Use
 
-To use proposed JS features not included into ES6, do this:
 
-* `npm install --save-dev babel-preset-stage-0`
-* in `brunch-config.js`, add the preset: `presets: ['latest', 'stage-0']`
+## Erstellen eines Ortes
+
+Erstellen eines neuen Ortes welcher den Helden und Gegnern die Zustände "Eingeengt" und "Dunkelheit" zuweist die sich dort befinden:
+
+[![Erstellen eines neuen Ortes](https://img.youtube.com/vi/fNGQ0d57Vko/0.jpg)](https://www.youtube.com/watch?v=fNGQ0d57Vko)
+[https://youtu.be/fNGQ0d57Vko]
+
+
+## Erstellen eines Gegners
+
+[![Erstellen eines neuen Gegners](https://img.youtube.com/vi/4LTfQRPZ3hY/0.jpg)](https://www.youtube.com/watch?v=4LTfQRPZ3hY)
+[https://youtu.be/4LTfQRPZ3hY]
