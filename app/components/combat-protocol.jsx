@@ -76,11 +76,11 @@ class CombatProtocol extends React.Component {
   }
 
   importState() {
-
+    console.log("import");
   }
 
   exportState() {
-
+    console.log("export");
   }
 
   updatePlayerStates(player) {

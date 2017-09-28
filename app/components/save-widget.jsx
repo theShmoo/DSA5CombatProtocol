@@ -5,8 +5,8 @@ export default class SaveWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.import = () => {this.props.onImport;};
-    this.export = () => {this.props.onExport;};
+    this.import = () => {this.props.onImport();};
+    this.export = () => {this.props.onExport();};
   }
 
   render() {
