@@ -46,6 +46,10 @@ class CombatProtocol extends React.Component {
     this.editLocation = this.editLocation.bind(this);
 
     this.hasLocalStorage = supportsLocalStorage();
+
+
+    this.importState = this.importState.bind(this);
+    this.exportState = this.exportState.bind(this);
   }
 
   loadFromLocalStorage () {
@@ -75,12 +79,27 @@ class CombatProtocol extends React.Component {
     }
   }
 
-  importState() {
-    console.log("import");
+  importState(filedata) {
+    let storedState = JSON.parse(filedata);
+    if(storedState)
+    {
+      console.log("import");
+      this.setState({
+        locations: storedState.locations,
+        location_id: storedState.location_id,
+        players: storedState.players,
+        player_id: storedState.player_id,
+      });
+    }
   }
 
   exportState() {
     console.log("export");
+    const content = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.state));
+    let dlAnchorElem = document.getElementById("downloadAnchorElem");
+    dlAnchorElem.setAttribute("href",     content     );
+    dlAnchorElem.setAttribute("download", "scene.json");
+    dlAnchorElem.click();
   }
 
   updatePlayerStates(player) {
@@ -311,6 +330,7 @@ class CombatProtocol extends React.Component {
           locations={locations}
           onAdd={this.addLocation}
           />
+        <a id="downloadAnchorElem" style={{display: 'none'}} />
       </Grid>
     );
   }

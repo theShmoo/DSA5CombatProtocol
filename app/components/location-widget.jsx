@@ -33,10 +33,10 @@ export default class LocationWidget extends React.Component {
     const title = "Orte";
     const add_tt = "Einen Ort hinzufügen";
     const defaultLocation = {
-        name: "Ort",
-        cramped: false,
-        darkness: 0
-      };
+      name: "Ort",
+      cramped: false,
+      darkness: 0
+    };
 
     return (
       <Col sm={12} className="location-widget">
