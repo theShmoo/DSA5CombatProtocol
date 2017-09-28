@@ -4,6 +4,7 @@ import PlayerWidget from "components/player-widget";
 import LocationWidget from "components/location-widget";
 import Location from "components/location";
 import IniWidget from "components/ini-widget";
+import SaveWidget from "components/save-widget";
 import {calculateStates} from "components/state-calculations";
 import { Row, Grid, Col } from "react-bootstrap";
 import { DragDropContext } from "react-dnd";
@@ -72,6 +73,14 @@ class CombatProtocol extends React.Component {
     if(this.hasLocalStorage) {
       localStorage.setItem("state", JSON.stringify(nextState));
     }
+  }
+
+  importState() {
+
+  }
+
+  exportState() {
+
   }
 
   updatePlayerStates(player) {
@@ -275,6 +284,7 @@ class CombatProtocol extends React.Component {
     let locations = this.state.locations.map((l) => {return this.createLocation(l);});
     return (
       <Grid fluid>
+        <SaveWidget onExport={this.exportState} onImport={this.importState} />
         <IniWidget players={this.state.players} onEditProperty={this.editPlayerProperty}/>
         <PlayerWidget
           hero
