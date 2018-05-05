@@ -1,0 +1,172 @@
+@import './variables.scss';
+
+.navbar {
+  margin-bottom: 50px;
+  border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+h2, h3, h4, h5 {
+  display: inline;
+}
+
+h4.list-group-item-heading{
+  display: initial;
+  margin-right: 0.5em;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+p.list-group-item-text{
+  display: initial;
+}
+
+.spell-list-meta-info{
+  margin-bottom: 2em;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+  background-color: #f2f2f2;
+  padding: 25px;
+}
+
+.form-inline .control-label {
+  margin: 0.5em;
+}
+
+.form-inline .form-control {
+  margin: 0.5em;
+}
+
+.player-widget,
+.location-widget {
+  border-top: 1px solid lightgrey;
+}
+
+.ini-widget {
+  margin-top: 1em;
+}
+
+.save-widget {
+  margin-top: 1em;
+}
+
+.clearboth {
+  clear: both;
+}
+
+.glyph-button {
+  margin-left: 1.0em;
+}
+
+.glyph-button,
+.glyphicon {
+  color: $glyph-color;
+  cursor: pointer;
+}
+
+.glyph-state {
+  margin-left: 0.3em;
+}
+
+.numeric-control {
+  padding-right: 0px;
+}
+
+.numeric-control-glyph-add,
+.numeric-control-glyph-reduce {
+  cursor: pointer;
+}
+
+.numeric-control-glyph-add {
+  color: green;
+}
+
+.numeric-control-glyph-reduce {
+  color: firebrick;
+}
+
+dt, dd {
+  float: left
+}
+dt {
+  margin-right: 0.2em;
+  clear: both;
+}
+
+dl.dl-inline dt {
+  clear: both;
+}
+
+.panel > .list-group .list-group-item,
+.panel > .panel-collapse > .list-group .list-group-item {
+  display: inline-block;
+  border-width: 0px 0px;
+}
+
+.panel-default > .panel-heading a {
+  color: black;
+}
+
+dl.dl-inline {
+  margin-bottom: 0em;
+}
+
+.hero,
+.enemy {
+}
+
+.hero {
+  box-shadow: 0px 0px 10px $hero-color-light;
+}
+
+.enemy {
+  box-shadow: 0px 0px 10px $enemy-color-light;
+}
+
+.enemy > .panel,
+.hero > .panel {
+  border: 0px;
+}
+
+.hero > .panel > .panel-heading,
+.enemy > .panel > .panel-heading {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  cursor: move;
+}
+
+.hero > .panel > .panel-heading {
+  background: $hero-color-light;
+}
+
+.enemy > .panel > .panel-heading {
+  background: $enemy-color-light;
+}
+
+.ini-hero {
+  color: $hero-color;
+}
+
+.ini-enemy {
+  color: $enemy-color;
+}
+
+.location {
+  margin-top: 1em;
+}
+
+.location .player-area {
+  margin-top: 1em;
+}
+
+.suggestion-highlighted {
+  cursor: pointer;
+  background: aliceblue;
+}

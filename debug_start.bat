@@ -1,2 +1,0 @@
-brunch watch --server
-pause
