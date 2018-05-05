@@ -10,11 +10,26 @@ import { ItemTypes } from "./constants";
 const locationTarget = {
   canDrop(props, monitor) {
     // You can disallow drop based on props or item
-    const item = monitor.getItem();
-    const i = props.players.findIndex(p => p.id === item.id); // find index of player
-    if(i < 0)
+    const from_player_id = monitor.getItem().id;
+    // find index of player
+    const i = props.players.findIndex(p => p.id === from_player_id);
+    // if not found (should not happen) it is not a target
+    if(i < 0 || props.id < 0)
       return false;
-    return props.players[i].location !== props.id && props.id > 1;
+
+    const from_player = props.players[i];
+    const to_location = props.id
+    // 1) is it the same location as before:
+    if(from_player.location === to_location)
+        return false;
+    // 2) is it a hero and the location is the enemy location:
+    if(from_player.hero && to_location === 1)
+        return false;
+    // 3) is it an enemy and the location is the hero location:
+    if(!from_player.hero && to_location === 0)
+        return false;
+
+    return true;
   },
 
   drop(props) {

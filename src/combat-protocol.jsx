@@ -304,7 +304,7 @@ class CombatProtocol extends Component {
     return (
       <Grid fluid>
         <SaveWidget onExport={this.exportState} onImport={this.importState} />
-        <IniWidget players={this.state.players} onEditProperty={this.editPlayerProperty}/>
+        <IniWidget players={this.state.players} onEdit={this.editPlayerProperty}/>
         <PlayerWidget
           hero
           players={this.state.players}
