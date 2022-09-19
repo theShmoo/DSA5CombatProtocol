@@ -19,7 +19,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "node-sass-chokidar": "^1.2.2",
     "react": "^16.2.0",
     "react-autosuggest": "^9.0.0",
